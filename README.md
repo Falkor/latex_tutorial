@@ -11,7 +11,7 @@ Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [[ww
 
 Tutorial to the use of the LaTeX document markup language, yet __in French__. 
 
-This repository holds the LaTeX sources of the tutorial as the bast way to learn LaTeX is probably to check how people are writting documents in LaTeX. 
+This repository holds the LaTeX sources of the tutorial as the best way to learn LaTeX is probably to check how people are writting documents in LaTeX. 
 You can view the PDF generated from these sources [here](https://github.com/downloads/Falkor/latex_tutorial/Tutorial_Latex.pdf).
 
 
