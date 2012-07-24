@@ -1,15 +1,20 @@
 -*- mode: markdown; mode: auto-fill; fill-column: 80 -*-
 `README.md`
 
-Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [www](http://varrette.gforge.uni.lu)
+Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [[www](http://varrette.gforge.uni.lu)]
 
-        Time-stamp: <Tue 2012-07-24 16:33 svarrette>
+        Time-stamp: <Tue 2012-07-24 18:30 svarrette>
 
 -------------------
 
 # Synopsis
 
 Tutorial to the use of the LaTeX document markup language, yet __in French__. 
+
+This repository holds the LaTeX sources of the tutorial as the bast way to learn LaTeX is probably to check how people are writting documents in LaTeX. 
+You can view the PDF generated from these sources [here](https://github.com/downloads/Falkor/latex_tutorial/Tutorial_Latex.pdf).
+
+
 
 # Installation
 
@@ -22,7 +27,8 @@ of LaTeX code is rendered.
 
 This tutorial is released under the
 [Creative Commons Attribution-Noncommercial-Share Alike 2.0 France](http://creativecommons.org/licenses/by-nc-sa/2.0/fr/deed.en_US)
-licence. In particular:
+licence. 
+In particular:
 
 ### You are free:
 
