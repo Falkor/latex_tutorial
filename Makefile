@@ -108,7 +108,10 @@ TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.out
 # Git stuff management
 LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
 LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
-VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
+TAG_PREFIX = "latex-tutorial-v"
+# VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
+
+VERSION  = $(shell head VERSION)
 MAJOR    = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
 MINOR    = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 REVISION = $(shell git rev-list $(LAST_TAG).. --count)
@@ -128,7 +131,8 @@ bump_patch:
 	@echo "Run 'make release' once you finished the patching"
 
 release: 
-	git flow finish feature "bump_to_$(VERSION)"
+	git flow feature finish "bump_to_$(VERSION)"
+	git tag -s "$(TAG_PREFIX)$(VERSION)"
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
