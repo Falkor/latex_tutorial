@@ -105,9 +105,30 @@ BACKUP_FILES = $(shell find . -name "*~")
 # Never add *.tex (or any reference to source files) for this variable.
 TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.out
 
+# Git stuff management
+LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
+LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
+VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
+MAJOR    = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
+MINOR    = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
+REVISION = $(shell git rev-list $(LAST_TAG).. --count)
+ROOTDIR  = $(shell git rev-parse --show-toplevel)
+
 ############################### Now starting rules ################################
 # Required rule : what's to be done each time 
 all: $(TARGET_PDF)
+
+# Git flow management 
+bump_patch:
+	@echo "Bump the current version of the repository from $(VERSION) to $(MAJOR).$(MINOR).$(REVISION)"
+	git pull origin
+	git flow feature start "bump_to_$(MAJOR).$(MINOR).$(REVISION)"
+	@echo "$(MAJOR).$(MINOR).$(REVISION)" > VERSION
+	git commit -s -m "Patch bump to version $(MAJOR).$(MINOR).$(REVISION)" VERSION
+	@echo "Run 'make release' once you finished the patching"
+
+release: 
+	git flow finish feature "bump_to_$(VERSION)"
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
