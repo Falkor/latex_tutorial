@@ -3,13 +3,13 @@
 
 Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [www](http://varrette.gforge.uni.lu)
 
-        Time-stamp: <Tue 2012-07-24 16:11 svarrette>
+        Time-stamp: <Tue 2012-07-24 16:33 svarrette>
 
 -------------------
 
 # Synopsis
 
-Tutorial to the use of the LaTeX document markup language, yet in French. 
+Tutorial to the use of the LaTeX document markup language, yet __in French__. 
 
 # Installation
 
