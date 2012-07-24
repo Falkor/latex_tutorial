@@ -1,0 +1,603 @@
+%===========================================================================
+% File         : _bases.tex
+% Title        : 
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 27 Jun 2007
+% Licence      : CC Creative Commons 
+%                Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+%
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+%
+% Selon les conditions suivantes :
+%
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière 
+%     indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous 
+%     confère cette autorisation (mais pas d'une manière qui suggérerait 
+%     qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser 
+%     cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de 
+%     transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez 
+%   faire apparaître clairement au public les conditions contractuelles de 
+%   sa mise à disposition. La meilleure manière de les indiquer est un 
+%   lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation 
+%   du titulaire des droits sur cette oeuvre.
+%   Rien dans ce contrat ne diminue ou ne restreint le droit moral de 
+%   l'auteur ou des auteurs.
+%=============================================================================
+
+
+
+%---------------------------------
+\subsection{Caractères réservés}
+
+Il existe un certain nombre de caractères réservés par \LaTeX\ car ils introduisent 
+une commande. Ils sont résumés dans le tableau suivant. %~\ref{tab:reserved_character}.
+Tous les autres caractères peuvent être utilisés librement. 
+
+\begin{table}[h]
+ \centering\small
+ \begin{tabular}{|l|l||l|l|}
+ \hline
+ \texttt{\%}              & Commentaire           & \texttt{\textbackslash}  & Commande  \\
+ \texttt{\{...\}}         & Bloc de traitement    & \verb!~!                 & Espace insécable\\
+ \texttt{\$}              & Mode mathématique     &  \texttt{\&}              & Repère d'alignement de tableau\\
+ \texttt{\#}              & paramètre d'une macro & \verb!^! et \verb!_!      & Mise en exposant et en indice\\
+% \texttt{\_}              & Mise en indice        & &\\
+ \hline
+ \end{tabular}
+% \caption{\small Les caractères de commande réservés de \LaTeX}
+% \label{tab:reserved_character}
+\end{table}     
+
+
+
+% Pour écrire la plupart des  caractères réservés, il suffit de les faire 
+% précéder par un \verb!\!.
+% Ainsi, 
+% \begin{quote}
+% \#\ \$\ \%\ \&\ \_\ \{\ \}
+% \end{quote}
+% est produit par 
+% \begin{quote}
+% \begin{verbatim}
+% \# \$ \% \& \_ \{ \}
+% \end{verbatim}
+% \end{quote}
+
+% Pour les récalcitrants, il suffit d'utiliser l'environnement \verb!verbatim! 
+% (voir \S\ref{sub:verbatim}, page~\pageref{sub:verbatim}) qui permet d'imprimer un 
+% texte tel qu'il est introduit et qui peut contenir n'importe quel caractère. 
+% Dans cet environnement, aucune commande ne pourra être utilisée.
+
+% %---------------------------------
+% \subsection{Caractères accentués}
+
+% Comme en HTML, pour obtenir les caractères accentués, il faut utiliser une 
+% séquence d'autres caractères. Celles-ci sont résumées dans le 
+% tableau~\ref{tab:accent_character}.
+
+% \begin{table}[h]
+%  \centering
+%  \begin{tabular}{|l|l||l|l|}
+%    \hline
+%    Séquence & Résultat & Séquence & Résultat \\\hline
+%    \verb/\'{e}/  & \'{e} & \verb/\u{o}/  & \u{o} \\
+%    \verb/\`{e}/  & \`{e} & \verb/\v{c}/  & \v{c} \\
+%    \verb/\^{e}/  & \^{e} & \verb/\H{o}/  & \H{o} \\
+%    \verb/\"{o}/  & \"{o} & \verb/\t{oo}/ & \t{oo}\\
+%    \verb/\~{n}/  & \~{n} & \verb/\c{c}/  & \c{c} \\
+%    \verb/\={o}/  & \={o} & \verb/\d{o}/  & \d{o} \\
+%    \verb/\.{o}/  & \.{o} & \verb/\b{o}/  & \b{o} \\ \hline
+%  \end{tabular} 
+%  \caption{\small Les caractères accentués en \LaTeX}
+%  \label{tab:accent_character}
+% \end{table} 
+
+
+%---------------------------------
+\subsection{Caractères spéciaux}
+
+Les caractères codés en ISO-8859-1 sont compris par le compilateur: les caractères accentués usuels 
+peuvent être saisis directement.  
+Il existe en revanche un certain nombre de caractères spéciaux résumés dans le 
+tableau~\ref{tab:special_character}.
+
+\begin{table}[h]
+ \centering\small
+ \begin{tabular}{|ll||ll||ll||ll|}
+   \hline
+   \"{o} & \verb/\"{o}/ & \.{o}  & \verb/\.{o}/ & \u{o} & \verb/\u{o}/ & \v{c} & \verb/\v{c}/ \\
+   \H{o} & \verb/\H{o}/ & \t{oo} & \verb/\t{oo}/& \c{c} & \verb/\c{c}/ & \d{o} & \verb/\d{o}/ \\
+   \b{o} & \verb/\b{o}/ & \={o}  & \verb!\={o}!   &&&&\\
+   \hline
+%   Symbole & Séquence & Symbole & Séquence & Symbole & Séquence & Symbole & Séquence\\
+%   \hline
+   \oe, \OE   & \verb/\oe, \OE/  & \dag       & \verb/\dag/       & \ae, \AE   & \verb/\ae, \AE/  & \ddag      & \verb/\ddag/ \\
+   \aa, \AA   & \verb/\aa, \AA/  & \S         & \verb/\S/         & \o, \O     & \verb/\o, \O/    & \P         & \verb/\P/  \\
+   \l, \L     & \verb/\l, \L/    & \copyright & \verb/\copyright/ & \ss        & \verb/\ss/       & \pounds    & \verb/\pounds/\\
+   ?`         & \verb/?`/        & \i         & \verb/\i/         & !`         & \verb/!`/        & \j         & \verb/\j/ \\
+   \hline
+   \#         & \verb!\#!        & \$         & \verb!\$!         & \%         & \verb!\%!        & \&         & \verb!\&! \\
+   \_         & \verb!\_!        & \{         & \verb!\{!         & \}         & \verb!\}!        & \textbackslash & \verb!\textbackslash! \\
+   \hline
+ \end{tabular}
+ \caption{\small Les caractères spéciaux de \LaTeX}
+ \label{tab:special_character}
+\end{table} 
+
+%---------------------------------
+\subsection{Commandes usuelles}
+\begin{small}
+\begin{tabular}{l|l}
+  \verb!\documentclass{...}!   & Définit la classe de document \\
+  \verb!\usepackage{...}!      & Charge un package \\
+  \verb!\title{...}!           & Description du titre du document \\
+  \verb!\author{...}!          & Description de l'auteur \\
+  \verb!\date{...}!            & Date de rédation \\
+  \hline
+  \verb!\maketitle!       & Ecrit le titre \\ %(paramétré en en-tête par \verb!\title{...}!)\\
+  \verb!\tableofcontents! & Ecrit la table des matières \\
+  \verb!\listoffigures!   & Ecrit la liste des figures \\
+  \verb!\listoftables!    & Ecrit la liste des tableaux \\
+  \verb!\TeX!, \verb!\LaTeX!, \verb!\LaTeXe! & \TeX, \LaTeX, \LaTeXe\\
+  \verb/\verb!...!/       & Mode \texttt{verbatim} en ligne -- voir \S\ref{sub:verbatim}\\
+  \verb!\begin{!\emph{env}\verb!}...\end{!\emph{env}\verb!}! & Délimitation du bloc d'environnement \emph{env}\\
+\end{tabular}  
+\end{small}
+
+
+%---------------------------------------------------------
+\subsection{Espaces et retours à la ligne dans le fichier source}
+\label{sec:espaces}
+
+Il faut faire attention avec l'utilisation des commandes car \LaTeX\ ignore 
+un espace qui suit immédiatement la commande lors de son insertion dans le texte. 
+
+Observez les deux exemples suivants:
+\begin{center}\small
+  \begin{tabular}{|l|l|}
+    \hline
+    \verb!\LaTeX est génial.! & \LaTeX est génial. \\
+    \hline
+    \verb!\LaTeX\ est génial.! & \LaTeX\ est génial.\\
+    \hline
+  \end{tabular}
+\end{center}
+De plus, \LaTeX\ considère les retours chariots, les tabulations et une succession 
+d'espaces vides comme un seul espace vide. 
+Ainsi, en tapant : 
+\begin{lstlisting}
+Ceci
+   est   un test sur les 
+ espaces.
+
+Ceci est un exemple de saut de ligne.\\
+
+Ceci est le début d'un nouveau paragraphe.
+\end{lstlisting}
+on obtient : 
+\begin{quote}
+Ceci
+   est   un test sur les 
+ espaces.
+
+Ceci est un exemple de saut de ligne.\\
+
+Ceci est le début d'un nouveau paragraphe.
+\end{quote}
+
+%On l'aura compris, la séquence \verb!\\! permet de forcer le retour à la ligne. 
+
+%------------------------------------------------
+\subsection{Structure hiérarchique du document}
+\label{sec:section}
+
+La structuration d'un document \LaTeX\ se base sur l'utilisation de commandes 
+de chapitrage.
+ Elles seront totalement gérées par \LaTeX\ (notamment en ce qui concerne 
+l'indentation et la numérotation).
+Les possibilités de subdivisions sont résumées ci-dessous
+mais certaines ne sont utilisables qu'avec certains styles.
+{\small
+\begin{verbatim}
+\part{}                % partie
+\chapter{}             % chapitre
+\section{}             % section
+\subsection{}          % sous-section 
+\subsubsection{}       % sous-section    (sous-section niveau 2)  
+\paragraph{}           % paragraphe      (sous-section niveau 3)         
+\subparagraph{}        % sous-paragraphe (sous-section niveau 4)   
+\appendix              % signale le début des annexes
+\end{verbatim}
+}
+Ne pas oublier de mettre le titre du chapitre, de la section, etc... 
+entre les accolades. 
+
+Il se peut qu'on veuille supprimer la numérotation proposée par \LaTeX.
+Pour cela, il suffit de placer le caractère '*' avant le titre de la division. 
+Ainsi, dans l'exemple suivant, le numéro de section est supprimé par la commande
+\verb!\section*{Remerciements}!.
+
+%---------------------------------
+\subsection{Insertion de fichiers}
+\label{sec:inclusion}
+
+Lorsque l'on rédige un long document, il n'est pas intéressant de travailler dans un seul fichier. 
+En effet, le temps de sauvegarde devient plus long et la navigation n'y est pas toujours aisée. 
+On dispose alors des commandes suivantes:
+\begin{enumerate}
+  \item \verb!\input{file}! est remplacé par le contenu de \texttt{file.tex};
+  \item \verb!\include{file}! insère le fichier \texttt{file.tex}.
+    \verb!\include! ne peut apparaître dans l'en-tête mais donne accès à 
+    \verb!\includeonly{file1,file2,...}! qui, placé dans l'en-tête, permet de restreindre 
+    la liste des fichiers à insérer.
+\end{enumerate}
+A noter que le package \texttt{import} fournit les commandes 
+\verb!\subimport{!\emph{dir/}\verb!}{!\emph{file}\verb!}! ou \verb!\subincludefrom{!\emph{dir/}\verb!}{!\emph{file}\verb!}! permettant d'inclure le fichier \texttt{file.tex} 
+relativement au sous-répertoire \texttt{dir/}.
+
+
+%------------------------
+\subsection{Mise en page}
+\label{sec:mise_en_page}
+
+%..................................
+\subsubsection{Taille de caractères}
+
+La taille des caractères est en premier lieu définie par les options de 
+style spécifiées au début d'un document. 
+En plus de cela, il existe 10 tailles que l'on peut spécifier par les 
+commandes du tableau~\ref{tab:taille}.
+\begin{table}[h]
+ \centering\small
+ \begin{tabular}{|l|l|l|}
+   \hline
+%   Séquence             & Exemple   \\\hline 
+   \verb/\tiny/         &  {\tiny Ce texte est \texttt{tiny}}\\
+   \verb/\scriptsize/   & {\scriptsize Ce texte est \texttt{scriptsize}} \\
+   \verb/\footnotesize/ & {\footnotesize Ce texte est \texttt{footnotesize}}\\
+   \verb/\small/        & {\small Ce texte est \texttt{small}}\\
+   \verb/\normalsize/   & {\normalsize Ce texte est \texttt{normalsize}}\\
+   \verb/\large/        & {\large Ce texte est \texttt{large}}\\
+   \verb/\Large/        & {\Large Ce texte est \texttt{Large}}\\
+   \verb/\LARGE/        & {\LARGE Ce texte est \texttt{LARGE}}\\
+   \verb/\huge/         & {\huge Ce texte est \texttt{huge}}\\
+   \verb/\HUGE/         & {\Huge Ce texte est \texttt{Huge}}\\
+   \hline
+ \end{tabular}
+ \caption{\small Les tailles de caractère en \LaTeX. Les exemples sont obtenus par une 
+   commande de la forme: \texttt{\{\textbackslash sequence Ce texte est \textbackslash texttt\{sequence\}\}}}
+ \label{tab:taille}
+\end{table} 
+
+% \underline{\emph{Remarque}}: les exemples de ce tableau sont obtenus par une commande de la forme: 
+% \verb!{\sequence Ce texte est \texttt{sequence}}!
+
+
+%....................................
+\subsubsection{Polices de caractères}
+\label{sub:polices}
+
+La police par défaut de LaTeX est la police roman. 
+D'autres polices sont également disponibles pour mettre en évidence certaines 
+parties de texte. 
+Tout est résumé dans le tableau~\ref{tab:police}. 
+On notera qu'il existe deux types de commande : 
+\begin{enumerate}
+  \item \emph{Les commandes à un argument}, qui permettent de spécifier 
+    la mise en forme de brefs extraits (par \verb!\emph{test}!);
+    \item \emph{Les commandes sans argument}, qui fonctionnent comme les précédentes 
+      mais qui peuvent être utilisées pour de plus longs extraits
+\end{enumerate}
+
+
+\begin{table}[h]
+ \centering\small
+ \begin{tabular}{|l|l|l|}
+   \hline
+%   Commande & Déclaration   &\\\hline 
+   \verb/\textnormal{...}/ & \verb/{\normalfont ...}/ & {\normalfont Normal}\\
+   \verb/\textbf{...}/     & \verb/{\bfseries ...}/   & {\bfseries Gras}\\
+   \verb/\textit{...}/     & \verb/{\itshape ...}/    & {\itshape Italic}\\
+   \verb/\textrm{...}/     & \verb/{\rmfamily ...}/   & {\rmfamily Police Roman}\\
+   \verb/\textsf{...}/     & \verb/{\sffamily ...}/   & {\sffamily Police Sans serif}\\
+   \verb/\texttt{...}/     & \verb/{\ttfamily ...}/   & {\ttfamily Police Typewriter}\\
+   \verb!\emph{...}!       & \verb!{\em ...}!         & \emph{Emphasize}\\
+   \verb/\textup{...}/     & \verb/{\upshape ...}/    & {\upshape Upright}\\
+   \verb/\textsl{...}/     & \verb/{\slshape ...}/    & {\slshape Slanted}\\
+   \verb/\textsc{...}/     & \verb/{\scshape ...}/    & {\scshape Petites Capitale}\\
+   \verb/\textmd{...}/     & \verb/{\mdseries ...}/   & {\mdseries Medium series}\\
+   \hline
+ \end{tabular}
+ \caption{\small Les polices de caractère en \LaTeX}
+ \label{tab:police}
+\end{table} 
+
+%..................................
+\subsubsection{Alignements}
+
+On distingue deux modes, soit en ligne, soit au sein d'un environnement pour les trois 
+types d'alignements:
+
+{\small
+\begin{tabular}{c|c|l}
+  \verb!{\centering ...}!   & \verb!\begin{center}...\end{center}! & centré \\
+  \verb!{\raggedright ...}! & \verb!\begin{flushleft}...\end{flushleft}! & aligné \underline{à gauche} \\
+  \verb!{\raggedleft ...}!  & \verb!\begin{flushright}...\end{flushright}! & aligné \underline{à droite} 
+\end{tabular}
+}
+
+
+%.............................
+\subsubsection{Texte littéral}
+\label{sub:verbatim}
+
+L'environnement \verb!verbatim! restitue exactement le texte d'entrée (y compris les 
+retours à la ligne) sans interpréter aucune commande ni caractère spécial.  
+La police utilisée est de type typewriter et évidemment, aucune optimisation d'affichage 
+n'est effectué. 
+A droite figure l'affichage du bloc de gauche:
+
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\begin{verbatim}
+Test avec la commande \LaTeX
+et un retour à la ligne
+\end{verbatim}        
+  \end{lstlisting}
+\end{minipage}
+\hfill 
+\begin{minipage}{0.45\linewidth}
+\begin{verbatim}
+Test avec la commande \LaTeX
+et un retour à la ligne
+\end{verbatim}
+\end{minipage}
+
+% Cet environnement commence une nouvelle ligne et passe à la ligne lorsqu'il 
+% se termine avec l'ajout d'un espace supplémentaire.
+Il existe un mode \og en ligne\fg de cet environnement introduit par la commande 
+\verb!\verb! dont la syntaxe est un peu particulière. 
+Cette commande prend en argument le texte à afficher, délimité par une paire 
+de caractères identiques (à l'exception de l'espace, de * et d'une lettre). 
+
+Ainsi les commandes
+\verb!\verb-truc~bidule-! et \verb/\verb!truc~bidule!/ produisent le même texte 
+\verb-truc~bidule-.
+
+%.............................
+\subsubsection{Texte souligné}
+
+On souligne un texte au moyen de la commande \verb!\underline{...}!.
+
+Ainsi \verb!\underline{Texte souligné}! produit \underline{Texte souligné}.
+
+
+%..................................
+\subsubsection{Espacements et sauts}
+
+Les différentes façon de caractériser les espaces et les sauts sont résumés dans le 
+tableau~\ref{tab:espaces}.
+
+\begin{table}[h]
+  \hspace*{-0.6cm}\centering\small
+  \begin{tabular}{cp{4.3cm}|cp{4.3cm}}
+   %\hline
+   $\sqcup$  & espace            & \verb!\,!       & petit espace  \\
+   \verb!~!  & espace insécable  & \verb!\\!       & saut de ligne \\
+   \verb!\newline! & saut de ligne & \verb!\\[!\emph{h}\texttt{]} & à la ligne avec \emph{h} d'interligne \\
+   \hline 
+   \verb!\hspace{!\emph{l}\texttt{\}}  & espace horizontal de \emph{l}, ignoré sur un saut de ligne &  
+   \verb!\vspace{!\emph{h}\texttt{\}}  & espace vertical   de \emph{h}, ignoré sur un saut de page\\  
+   \verb!\hspace*{!\emph{l}\texttt{\}} & espace horizontal de \emph{l} &  
+   \verb!\vspace*{!\emph{h}\texttt{\}} & espace vertical   de \emph{h}\\  
+   \verb!\smallskip! & petit espace vertical & \verb!\medskip! & espace vertical moyen \\
+   \verb!\bigskip!   & grand espace vertical & & \\
+   \hline
+   \verb!\hfill!     & espace élastique horizontal & \verb!\vfill!   & espace élastique vertical\\
+   \verb!\hrulefill! & ligne élastique horizontale & \verb!\dotfill! & ligne de points élastiques horizontaux\\
+   %\hline
+%   \verb!\clearpage! & saut de page & \verb!\cleardoublepage! & double saut de page\\
+%   \hline
+ \end{tabular}
+ \caption{\small Caractérisation des espacements et des sauts de page dans \LaTeX}
+ \label{tab:espaces}
+\end{table}
+Pour les sauts de page, on utilise la commande \verb!\newpage!, les commandes 
+\verb!\clearpage! et \verb!\cleardoublepage! faisant la même chose en forcant 
+l'impression des figures et des tables (et en commencant éventuellement sur une page 
+impaire).
+
+%....................................
+\subsubsection{En-tête et pied de page}
+
+On peut paramétrer les en-têtes et pieds de page à l'aide des commandes suivantes:
+
+{\small
+  \begin{tabular}{c|p{8cm}}
+    \verb!\pagestyle{!\emph{style}\verb!}! & définit en préambule le style des pages du document\\
+    \verb!\thispagestyle{!\emph{style}\verb!}! & définit le style de la  page courante\\
+    \verb!\markright{!\emph{configd}\verb!}! & définit l'en-tête droit pour le style \texttt{myheadings}\\
+    \verb!\markboth{!\emph{configd}\verb!}{!\emph{configg}\verb!}! & définit les en-têtes 
+    gauches et droits pour le style \texttt{myheadings}\\
+  \end{tabular}
+}
+
+Par défaut, \LaTeX\ offre la numérotation des pages en bas de page (style \texttt{plain}). 
+On dispose de trois autres styles de mise en page:
+\begin{itemize}
+\item \texttt{empty:} hauts et bas de pages vides;
+\item \texttt{headings:} la numérotation des pages apparaît en haut avec différentes 
+  informations dépendant de la classe de document;
+\item \texttt{myheadings:} pour une configuration personnalisée à partir des commandes 
+  \verb!\markright! et \verb!\markboth!.
+\end{itemize}
+
+%----------------------
+\subsection{Les listes}
+\label{sec:listes}
+
+\LaTeX\ fournit les environnements suivants pour gérer les listes:
+\begin{itemize}
+\item \verb/enumerate/ pour les listes numérotées;
+\item \verb/itemize/  pour les listes non numérotées;
+\item \verb/description/ pour les description.
+\end{itemize}
+Voici quelques exemples d'utilisation (à droite figure le résultat du code de gauche):
+
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\begin{itemize}
+ \item Premier élément
+ \item[*] Une étoile
+ \item[\textbullet] Un point
+ \item Dernier élément
+\end{itemize}
+   \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \begin{itemize}
+  \item Premier élément
+  \item[*] Une étoile
+  \item[\textbullet] Un point
+  \item Dernier élément
+  \end{itemize}  
+\end{minipage}
+
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\begin{enumerate}
+\item Premier élément
+\item Dernier élément
+\end{enumerate}
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \begin{enumerate}
+  \item Premier élément
+  \item Dernier élément
+  \end{enumerate}
+\end{minipage}
+
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\begin{description}
+\item[element1] Def1
+\item[element2] Def2
+\end{description}
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \begin{description}
+  \item[element1] Def1
+  \item[element2] Def2
+  \end{description}
+\end{minipage}
+
+
+%-----------------------------------
+\subsection{Les références croisées}
+\label{sec:references}
+
+Dans un document, on désire souvent se référer à un numéro de page, de section, de figure
+ou de tableau. 
+On parle alors de référence croisée. 
+Pour créer une étiquette, il suffit de placer la commande \verb!\label{...}! dans 
+l'environnement que l'on souhaite référer. Exemple : 
+
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\section{test}                    
+\label{sec:test}                  
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \begin{lstlisting}
+\begin{table}
+  ...
+  \label{tab:mytab}
+\end{table}
+  \end{lstlisting}
+\end{minipage}
+
+La référence à une étiquette positionnée dans le texte s'effectue avec la commande 
+\verb!\ref{...}! (la commande \verb!\pageref{...}! permettant de référencer un numéro de 
+page).
+Si on reprend l'exemple précédent, on peut référencer la section test et le tableau par:
+\begin{lstlisting}
+Dans la section~\ref{sec:test}, page~\pageref{sec:test}, on a montré...
+Le tableau~\ref{tab:toto} résume...  
+\end{lstlisting}
+L'utilisation d'un espace insécable introduit par \verb!~! est conseillé pour éviter les 
+césures qui peuvent limiter la lisibilité du texte.
+
+%-----------------------------------
+\subsection{Les notes en bas de page}
+
+La commande \verb!\footnote{...}! permet d'ajouter une note en bas de page.
+Ainsi, le texte suivant:
+
+\begin{lstlisting}
+  Un exemple de note en bas de page\footnote{la note en bas de page.}.
+  Ici, la suite...
+\end{lstlisting}
+produit: 
+\begin{quote}
+Un exemple de note en bas de page\footnote{la note en bas de page.}. 
+Ici, la suite... 
+\end{quote}
+
+%..............................................
+\subsubsection{Les liens sur des pages web}
+
+La façon la plus simple pour présenter un lien sur une page web est d'utiliser
+la commande \verb!\url{...}! proposée par le package \texttt{url}:
+
+\begin{lstlisting}
+    Un exemple de lien sur la page GitHub de ce document:
+    \begin{center}
+        \url{https://github.com/Falkor/latex_tutorial}.
+    \end{center}
+\end{lstlisting}
+qui produit:
+
+Un exemple de lien sur la page GitHub de ce document:
+\begin{center}
+    \url{https://github.com/Falkor/latex_tutorial}.
+\end{center}
+
+Une autre approche (plus complète) consiste à utiliser le package
+\texttt{hyperref} qui ne fonctionne qu'avec une compilation par
+\texttt{pdflatex} et qui donne accès à la commande \verb!\href{url}{text}!.
+Exemple:
+
+\begin{lstlisting}
+    % dans l'en-tête du document 
+    \usepackage[colorlinks=true]{hyperref}
+    % Eventuellement, configurer hyperref par \hypersetup
+    % pour plus d'info, cf http://www.digitbooks.fr/ressources/Hack88.pdf
+    [...]
+    Un exemple de lien sur la
+    \href{https://github.com/Falkor/latex_tutorial}{page GitHub de ce document}
+\end{lstlisting}
+qui produit:\\
+
+
+Un exemple de lien sur la
+    \href{https://github.com/Falkor/latex_tutorial}{page GitHub de ce document}
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+%
+% Local Variables:
+% mode: latex
+% End:

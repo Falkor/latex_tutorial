@@ -1,0 +1,264 @@
+% =======================================================================
+% File         : _intro.tex
+% Title        :
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 27 Jun 2007
+% Licence      : CC Creative Commons
+% Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+% 
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+% 
+% Selon les conditions suivantes :
+% 
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière
+% indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous
+% confère cette autorisation (mais pas d'une manière qui suggérerait
+% qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser
+% cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de
+% transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez
+% faire apparaître clairement au public les conditions contractuelles de
+% sa mise à disposition. La meilleure manière de les indiquer est un
+% lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation
+% du titulaire des droits sur cette oeuvre.
+% Rien dans ce contrat ne diminue ou ne restreint le droit moral de
+% l'auteur ou des auteurs.
+% =======================================================================
+
+% ----------------------------------
+\subsection{Qu'est ce que \LaTeX ?}
+
+A l'origine, D. E. Knuth a développé \TeX\
+notamment pour réaliser de beaux documents et écrire des
+formules mathématiques.
+
+Ensuite, \LaTeX\ fut écrit par L. Lamport en 1982 comme un jeu de macros
+au-dessus de TeX, plus facile à utiliser que ce dernier.
+
+% --------------------
+\subsection{Principe}
+\label{sub:principe}
+
+\LaTeX\ peut être considéré comme un langage de programmation
+évolué dans le sens où il s'appuie sur TeX qui est un langage de
+plus bas niveau.
+Cela signifie que le document que l'on veut créer doit être
+décrit dans un fichier source (\verb!mon_fichier.tex! par exemple),
+composé d'un ensemble de commandes (balises) \LaTeX\
+puis doit être compilé.
+Le compilateur \LaTeX\ fournit en sortie un fichier DVI (device independent)
+(\verb!mon_fichier.dvi!).
+Ce fichier peut alors lui-même être converti en format Postscript
+ou PDF pour être imprimé/exporté.
+
+La plupart des commandes \LaTeX\ se caractérisent par le
+fait qu'elles commencent par un "backslash" \verb!\!, que leurs
+arguments obligatoires apparaissent entre accolades (\{ et \}) et
+que leurs arguments optionnels apparaissent entre crochets ([ et
+]).
+
+Ex : \verb!\documentclass[12pt]{report}!.
+
+% ---------------------------------------------
+\subsection{Quelques commandes de compilation}
+\label{sec:compilation}
+
+% ...............................
+\subsubsection{Sous UNIX/Linux }
+
+\begin{enumerate}
+  \item Pour compiler un fichier source (file.tex) : \verb!latex file.tex!
+
+    En cas d'erreur, la ligne où est
+    située l'erreur est indiquée. L'emplacement de l'erreur dans la
+    ligne est précisé par un retour à la ligne. Une explication
+    succincte de l'erreur est également fournie.
+
+    L'utilisateur dispose alors d'un certain nombre de commandes:
+    \begin{itemize}
+      \item "?" :  permet d'avoir un menu d'aide.
+      \item "h" :  peut permettre d'avoir une explication plus
+        détaillée de l'erreur sur laquelle LaTeX s'est arrêté.
+      \item "return" : peut permettre de forcer la suite de la compilation.
+      \item "s" : permet de visualiser les messages d'erreur suivants.
+      \item "r" : permet de poursuivre la compilation sans arrêt.
+      \item "q" : permet de continuer la compilation sans messages.
+      \item "i" : permet d'insérer quelque chose (une balise
+        oubliée par exemple) pour pouvoir poursuivre la compilation.
+      \item "e" : permet d'éditer le fichier source.
+      \item "x" : permet d'abandonner la compilation.
+      \item Un chiffre de 1 à 9 permet d'ignorer les x prochains
+        caractères du source.
+    \end{itemize}
+  \item Pour compiler les références bibliographiques: \verb!bibtex file!.
+  \item Pour visualiser le fichier DVI: \verb!xdvi file.dvi!.
+  \item Transformer un fichier DVI $\longleftrightarrow$ PS:
+    \verb!dvips file.dvi!.
+  \item Pour imprimer un fichier PS: \verb!lp -d <mon_imprimante> file.ps!.
+  \item Transformer un fichier DVI $\longleftrightarrow$ PDF:
+    \verb!dvipdf file.dvi!
+  \item Transformer directement un source \LaTeX\ en PDF:
+    \verb!pdflatex file.tex!
+\end{enumerate}
+
+
+En résumé, la génération complète d'un document PDF se résume aux étapes
+suivantes:
+{\small
+\begin{verbatim}
+$ pdflatex file.tex
+$ pdflatex file.tex
+\end{verbatim}
+}
+La seconde execution de \texttt{pdflatex} permet de rétablir les références
+croisées et la table des matières évaluées lors de la première invocation
+(sans cette recompilation, des \ref{toto} apparaitront).
+
+Si vraiment vous souhaitez appliquer l'ancienne méthode passant par un fichier
+DVI et un PostScript, il suffit d'utiliser les commandes suivantes:
+{\small
+\begin{verbatim}
+$ latex file.tex
+$ latex file.tex
+$ dvips file.dvi
+\end{verbatim}%$
+}
+
+% La seconde étape n'est nécessaire que si des références bibliographiques au format BibTeX
+% sont utilisées (voir \S\ref{sec:biblio})
+
+% ...........................
+\subsubsection{Sous Windows}
+
+Il suffit d'installer le compilateur \emph{freeware}
+MikTeX\footnote{\url{http://www.miktex.org}}.
+Ensuite, le premier éditeur facile exploitable était
+WinEdt\footnote{\url{http://www.winedt.com/}}. Il présente le défaut d'être
+\emph{shareware} si bien qu'on lui préfèrera aujourd'hui les alternatives
+\emph{freeware}, tel TeXnicCenter\footnote{\url{http://www.toolscenter.org/}} ou
+MeVa\footnote{\url{http://www.meshwalk.com/latexeditor/}}.
+Ghostview\footnote{\url{http://www.cs.wisc.edu/~ghost/}} est un logiciel \emph{freeware}
+qui permet de visualiser les fichiers au format PostScript.
+
+% Une archive, temporairement disponible sur mon site à l'adresse
+% \url{http://www-id.imag.fr/~svarrett/download/latex4Windows.tgz}
+% (40 Mo) contient  l'intégralité des programmes requis
+% pour utiliser \LaTeX\ sous windows.
+
+% ...............................
+\subsubsection{Sous Mac OS X}
+
+Il suffit d'installer MacTeX\footnote{\url{http://www.tug.org/mactex/}} et
+TexShop\footnote{\url{http://www.uoregon.edu/~koch/texshop/}} pour disposer d'un
+environnement intégré complet et \emph{freeware}.
+Dans les préférences de TexShop, il faut juste penser à changer l'encoding par défaut
+(MacOSRoman) pour Latin-1.
+
+Personnellement, je préfère utiliser Emacs plutôt que TexShop pour l'édition de
+mes documents \LaTeX, en particulier à cause de du mode \texttt{AUCTeX}.
+
+
+
+% ----------------------------------------------------
+\subsection{Structure générale d'un document \LaTeX}
+\label{sec:structure_generale}
+
+Un premier exemple très simple :
+\begin{lstlisting}
+% Ceci est un commentaire
+% En-tete de tout document LaTeX. Spécifie le type de document écrit
+\documentclass[11pt,a4paper]{article}
+
+\begin{document} % marque le début du texte à composer
+    Le corps du document....
+\end{document}   % marque la fin du document
+\end{lstlisting}
+
+Un document \LaTeX\ commence donc toujours par une commande \verb!documentclass!
+permettant de spécifier la classe de document (entre accolades).
+Les classes les plus utilisées sont \texttt{article}, \texttt{report}, \texttt{letter},
+et \texttt{book}.
+Les options de cette commande sont déclarées entres crochets. Parmi les plus courantes,
+on mentionnera \texttt{10pt}, \texttt{11pt}, \texttt{12pt} (qui déterminent la taille
+nominale des polices), \texttt{a4paper} (pour les dimensions de la feuille de papier),
+\texttt{french}, \texttt{twocolumn} (pour la disposition du texte sur deux colonnes),
+\texttt{twoside} (écriture recto-verso) etc.
+% ELles permettent de fixer l'allure générale du document telle que
+% les dimensions, la disposition du titre, des inter-titres, l'indentation,
+% l'espacement des paragraphes, etc...
+
+En pratique, l'en-tête permet de définir un certain nombre de configurations, notamment
+les packages utilisés (par la commande \verb!\usepackage!), les redéfinitions de
+commandes (voir \S\ref{sec:advanced}), le titre, le style bibliographique etc.
+L'exemple suivant devrait convenir à la plupart des usages:
+
+\begin{lstlisting}
+\documentclass[11pt,twoside,a4paper]{article}
+
+% =============== En-Tete ===============
+% --- Insertion de paquetages (optionnel) ---
+\usepackage[french]{babel}   % pour dire que le texte est en français
+\usepackage{a4}              % pour la taille
+\usepackage[T1]{fontenc}     % pour les font postscript
+\usepackage[cyr]{aeguill}    % Police vectorielle TrueType, guillemets français
+\usepackage{epsfig}          % pour gérer les images
+\usepackage{amsmath, amsthm} % très bon mode mathématique
+\usepackage{amsfonts,amssymb}% permet la definition des ensembles
+\usepackage{float}           % pour le placement des figure
+\usepackage{url}             % pour une gestion efficace des url
+
+\bibliographystyle{plain}    % Style bibliographique
+% --- Pour le titre ---
+\title{Titre du document}
+\author{Prenom Nom <\url{Prenom.Nom@domain.org}>}
+
+% =============== Corps ===============
+\begin{document}
+\maketitle            % écrit le titre
+\tableofcontents      % écrit la table des matières
+
+\section{première section}
+\subsection{première sous-section}
+le texte...
+\end{document}
+\end{lstlisting}
+
+% -----------------------------
+\subsection{Packages usuels}
+
+\begin{itemize}
+  \item\texttt{aeguill:} avec l'option \texttt{cyr}, inclut le package \texttt{ae} pour produire
+    des documents PDF de qualité en ajoutant les guillemets français \og et \fg.
+  \item\texttt{amsmath, amsthm, amsfonts,amssymb:} extensions de \emph{American Mathematical Society}
+    qui fournissent un ensemble de commandes pour le mode mathématique.
+  \item\texttt{babel:} adapte les noms de chapitres, les dates et les autres textes inséré par
+    \LaTeX\ dans la langue passée en option.
+  \item\texttt{color:} pour l'utilisation de couleurs.
+  \item\texttt{draftcopy:} imprime le mot \og DRAFT\fg en fond de page.
+  \item\texttt{epsfig:} pour la gestion des graphiques au format \texttt{eps}.
+  \item\texttt{fancybox:} ajoute plusieurs commandes d'encadrement de page.
+  \item\texttt{float:} améliore la gestion des éléments flottants comme les tableaux et les figures.
+  \item\texttt{fontenc:} avec l'option \texttt{T1}, autorise le compilateur à utiliser le nouveau
+    format d'encodage de fontes. \textbf{Ce package est à utiliser systématiquement}.
+  \item\texttt{graphics:} fournit plusieurs commandes de manipulation des boîtes et des graphiques.
+  \item\texttt{import:} pour la gestion des sous-répertoires.
+  \item\texttt{listing:} pour l'affichage optimisé des codes sources.
+  \item\texttt{minitoc:} permet de construire une mini table des matières au début de chaque
+    chapitre sous les classes \texttt{book:} et \texttt{report}.
+  \item\texttt{multirow:} pour les cases de tableau sur plusieurs lignes.
+  \item\texttt{rotating:} pour effectuer des rotations de tables, de figures et de légendes.
+  \item\texttt{url:} permet d'afficher correctement des URLs.
+\end{itemize}
+
+
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+% 
+% Local Variables:
+% mode: latex
+% End:

@@ -1,0 +1,305 @@
+% =======================================================================================
+% Fichier      : Tutorial_Latex.tex
+% Title        :
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 26 Apr 2004
+% Licence      : CC Creative Commons
+% Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+% 
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+% 
+% Selon les conditions suivantes :
+% 
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière
+% indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous
+% confère cette autorisation (mais pas d'une manière qui suggérerait
+% qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser
+% cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de
+% transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez
+% faire apparaître clairement au public les conditions contractuelles de
+% sa mise à disposition. La meilleure manière de les indiquer est un
+% lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation
+% du titulaire des droits sur cette oeuvre.
+% Rien dans ce contrat ne diminue ou ne restreint le droit moral de
+% l'auteur ou des auteurs.
+% ========================================================================================
+
+\documentclass[11pt,twoside,a4paper]{article}
+% \usepackage{_style}
+
+% --- Insertion de paquetages ---
+\usepackage[french]{babel}    %pour dire que tu fais du francais
+\usepackage{ae,a4}
+\usepackage[T1]{fontenc}
+\usepackage[cyr]{aeguill}     % Police vectorielle TrueType, guillemets français \og \fg
+\usepackage{epsfig}
+\usepackage{amsmath, amsthm}
+\usepackage{amsfonts,amssymb} % permet la definition des ensembles
+\usepackage{float}
+\usepackage{url}
+\usepackage{xspace} % gestion intelligente des espaces pour les definitions
+\usepackage[colorlinks=true]{hyperref} % Meilleur rendu des liens en PDF
+
+
+\usepackage{multirow,slashbox}
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Code Listings
+%%%%%%%%%%%%%% 
+\usepackage{listings}
+%%% Configuration par défaut des listings
+\definecolor{bcode}{rgb}{0.9,0.9,0.9} % Couleur de fond pour les listings
+% confs par défaut
+\lstset{numbers=left,numberstyle=\tiny,stepnumber=3,firstnumber=1,language=[LaTeX]TeX,basicstyle=\small,columns=flexible,emph={cfrac,includegraphics,backslashbox,rowcolor,columncolor,multirow,subsection,maketitle,binom,tableofcontents},emphstyle=\bfseries,backgroundcolor=\color{bcode},showstringspaces=false,escapeinside={/*@}{@*/},numbers=none}
+
+\setlength{\parindent}{0 in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Versionning with day and time
+%%%%%%%%%%%%%% 
+% months
+\def\ftoday{\number\day\space
+  \ifcase\month\or
+  january\or february\or march\or april\or may\or june\or
+  july\or august\or september\or october\or november\or december\fi
+  \space\number\year}
+% \isodayandtime to get current date and time
+\begingroup
+\count0=\time \divide\count0by60 % Hour
+\count2=\count0 \multiply\count2by-60 \advance\count2by\time% Min
+\def\2#1{\ifnum#1<10 0\fi\the#1}
+\xdef\isodayandtime{\the\year-\2\month-\2\day\space\2{\count0}:%sec
+  \2{\count2}}
+\endgroup
+
+
+% Style bibliographique
+\bibliographystyle{plain}
+
+%%%% style de page (pour les en-tete)
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+% \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt}
+\fancypagestyle{plain}{
+  \fancyhead{}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% --- Definitions de nouvelles commandes ---
+
+% les ensembles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Fp}{\mathbb{F}_p}
+
+% Pour l'affichage des caractères spéciaux
+\def\displayandname#1{\rlap{$\displaystyle\csname #1\endcsname$}%
+  \qquad \texttt{\char92 #1}}
+\def\mathlexicon#1{$$\vcenter{\halign{\displayandname{##}\hfil&&\qquad
+      \displayandname{##}\hfil\cr #1}}$$}
+
+\newcommand{\vs}{\vspace{5mm}}
+\newcommand{\printcolor}[1]{\textcolor{#1}{\texttt{#1}}}
+\newcommand{\iu}[1]{{\underline{\it #1}}}
+
+
+% pour les propositions, lemmes etc.... Utilise le package amsthm
+% L'ajout de [section] précise la numéro de section avant le numéro de théorème
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{proposition}{Proposition}[section]
+% Pour les définitions
+\newtheorem{definition}{Définition}[section]
+
+
+% --- Pour le titre ---
+\newlength{\larg}
+\setlength{\larg}{15cm}
+\title{
+  {\rule{\larg}{1mm}}
+  \vspace{7mm}
+  \begin{tabular}{p{2.5cm}r}\\
+      &{\huge \sc{Tutorial \LaTeX}}\\
+      \\
+      & {\huge Comprendre et écrire un document}\\
+      & {\huge en \LaTeX}\\
+  \end{tabular}
+  {\rule{\larg}{1mm}}
+  \begin{tabular}{p{0.7\textwidth}r}
+      % {\small Sebastien.Varrette@imag.fr}
+      & {\small Version : 0.6 -- juillet 2012\footnote{Compiled time: \isodayandtime.}}\\
+  \end{tabular}
+}
+
+\author{Sebastien Varrette <\url{Sebastien.Varrette@uni.lu}>}
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    LaTeX est un langage informatique qui permet de formatter et de générer des documents
+    scientifiques.
+    LaTeX est notamment utilisé par les mathématiciens pour la qualité du rendu et de la
+    génération de formules mathématique.
+
+    Ce document s'adresse à la fois aux néophytes qui souhaitent apprendre à utiliser \LaTeX\
+    qu'aux utilisateurs chevronnés qui veulent trouver rapidement une commande spécifique.
+    La version courante de ce document est disponible sur GitHub à l'adresse
+    suivante:
+    \begin{center}
+        \url{https://github.com/Falkor/latex_tutorial}.
+    \end{center}
+\end{abstract}
+
+
+\clearpage
+
+\tableofcontents
+\clearpage
+
+% ===========================================================
+\section{Introduction à \LaTeX}
+\label{sec:intro}
+\input{_intro}
+
+
+
+% ===========================================================
+\section{Les bases}
+\label{sec:bases}
+\input{_bases}
+
+% ===========================================================
+\section{Tableaux et figures en \LaTeX}
+\label{sec:tableau_figure}
+\input{_tableau_figure}
+
+
+% ===========================================================
+\section{Les maths et \LaTeX}
+\label{sec:maths}
+\input{_maths}
+
+% ===========================================================
+\section{Aspects avancés}
+\label{sec:advanced}
+\input{_aspects_avances}
+
+% ===========================================================
+\section{Liens utiles}
+\label{sec:links}
+
+Outre la bibliographie qui fournit notamment les livres de références sur \LaTeX\
+\cite{Lamport,Latex-oReilly}, il existe un certain nombre de documents
+qui peuvent vous être utiles en complément de ce tutorial:
+\begin{itemize}
+  \item FAQ (Frequently Asked Questions) \LaTeX:\\
+    \url{http://www.grappa.univ-lille3.fr/FAQ-LaTeX/}
+    Ce site devrait répondre à toutes vos interrogations sur \LaTeX\
+    et la façon de réaliser telle ou telle chose.
+  \item Le site de référence  pour Latex2e:\\
+    \url{http://cs.wlu.edu/~necaise/refs/latex2e/Contents.html}
+  \item Le site \url{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/} référence
+    bon nombres de documents sur \LaTeX.
+  \item J'aime beaucoup le site \url{http://www.commentcamarche.net/} qui
+    contient notamment un tutorial de Thomas Nemeth sur Latex \cite{NemethLatex}.
+  \item Linda CHAN-SUN a écrit un tutorial \cite{ChansunLatex} pour les étudiants
+    de supinfo.
+  \item Le "vieux" tutorial de Frédéric Geraerds \cite{GeraerdsLatex} pourra
+    également vous être utile.
+  \item Un tutorial en anglais avec quelques exercices: \\
+    \url{http://www.cs.cornell.edu/Info/Misc/LaTeX-Tutorial/LaTeX-Home.html}
+  \item "Installer \LaTeX\ sous Windows"\\
+    \url{http://mathro.fpms.ac.be/~glineur/LaTeX/index.fr.html}
+\end{itemize}
+
+% ===========================================================
+% Bibliography
+% ===========================================================
+\appendix
+
+\bibliography{latex.bib}
+
+\section{Licence}
+{\scriptsize
+  Ce document est produit sous les termes de la licence CC Creative Commons
+  \og Attribution - Pas d'Utilisation Commerciale - Partage dans les Mêmes Conditions 2.0 France\fg  \href{http://creativecommons.org/licenses/by-nc-sa/2.0/fr/}{CC BY-NC-SA 2.0}.\\
+
+  Vous \^etes libre de :
+  \begin{itemize}
+    \item \textbf{partager} -- reproduire, distribuer et communiquer cette création
+    \item \textbf{remixer} --  adapter cette création
+  \end{itemize}
+  \vspace{1em}
+  Selon les conditions suivantes :
+
+  \begin{itemize}
+    \item \textbf{Attribution} -- Vous devez attribuer l'oeuvre de la manière indiquée
+      par l'auteur de l'oeuvre ou le titulaire des droits (mais pas d'une manière
+      qui suggérerait qu'ils vous approuvent, vous ou votre utilisation de
+      l'oeuvre).
+    \item \textbf{Pas d'Utilisation Commerciale} -- Vous n'avez pas le droit
+      d'utiliser cette oeuvre à des fins commerciales.
+
+    \item \textbf{Partage dans les Mêmes Conditions} --  Si vous modifiez,
+      transformez ou adaptez cette oeuvre, vous n'avez le droit de distribuer
+      votre création que sous une licence identique ou similaire à celle-ci.  
+  \end{itemize}
+  \vspace{1em}
+  comprenant bien que :
+
+  \begin{itemize}
+    \item \textbf{Renonciation} -- N'importe laquelle des conditions ci-dessus
+      peut être levée si vous avez l'autorisation du titulaire de droits. 
+    \item \textbf{Domaine Public} -- Là où l'oeuvre ou un quelconque de ses
+      éléments est dans le domaine public selon le droit applicable, ce statut
+      n'est en aucune façon affecté par la licence. 
+    \item \textbf{Autres droits} -- Les droits suivants ne sont en aucune
+      manière affectés par la licence : 
+      \begin{itemize}
+        \item Vos prérogatives issues des exceptions et limitations aux droits
+          exclusifs ou \underline{\textbf{fair use}};
+        \item Les \underline{\textbf{droits moraux}} de l'auteur;
+        \item Droits qu'autrui peut avoir soit sur l'oeuvre elle-même soit sur
+          la façon dont elle est utilisée, comme le
+          \underline{\textbf{droit à l'image}} ou les droits à la vie privée. 
+      \end{itemize}
+    \item \textbf{Remarque} -- A chaque réutilisation ou distribution de cette
+      oeuvre, vous      devez faire apparaître clairement au public la licence
+      selon laquelle elle est mise à disposition. La meilleure manière de
+      l'indiquer est un lien vers cette page web.
+    
+
+  \end{itemize}
+}
+
+
+\end{document}
+
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+% 
+% Local Variables:
+% mode: latex
+% End:

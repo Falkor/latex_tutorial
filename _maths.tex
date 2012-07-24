@@ -1,0 +1,991 @@
+%=======================================================================
+% File         : _maths.tex
+% Title        : 
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 27 Jun 2007
+% Licence      : CC Creative Commons 
+%                Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+%
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+%
+% Selon les conditions suivantes :
+%
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière 
+%     indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous 
+%     confère cette autorisation (mais pas d'une manière qui suggérerait 
+%     qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser 
+%     cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de 
+%     transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez 
+%   faire apparaître clairement au public les conditions contractuelles de 
+%   sa mise à disposition. La meilleure manière de les indiquer est un 
+%   lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation 
+%   du titulaire des droits sur cette oeuvre.
+%   Rien dans ce contrat ne diminue ou ne restreint le droit moral de 
+%   l'auteur ou des auteurs. 
+%=======================================================================
+
+C'est la vraie raison du succès de \LaTeX, qui permet une écriture aisée et 
+rigoureuse de formules mathématiques.
+Il est conseillé d'utiliser les packages additionnels 
+\texttt{amsmath,amsthm,amsfonts,amssymb} qui facilitent la vie. 
+Cette section détaille le génération de formules mathématiques avec \LaTeX.
+
+%---------------------------------
+\subsection{Le mode mathématiques}
+\label{sec:mode_maths}
+
+Pour écrire des formules et/ou des symboles mathématiques, il faut d'abord passer 
+en mode mathématiques. 
+On distingue principalement deux méthodes\footnote{On peut revenir au mode texte dans 
+  le mode mathématique par la commande \texttt{\textbackslash text\{...\}}.}:
+\begin{enumerate}
+  \item \verb!$...$! ou \verb!\(...\)! : la formule fait partie d'un texte.
+  \item \verb!\[...\]! : le formule est mise en évidence : il y a un saut de ligne 
+    et la formule est centrée.
+\end{enumerate}
+Exemple: 
+
+\begin{minipage}{.5\linewidth}
+  \begin{lstlisting}
+Soit $\epsilon > 0$ un seuil arbitraire:
+\[ 
+  \forall \alpha \geq \epsilon, 
+  f(\alpha) < \frac{1}{2} 
+\]    
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{.43\linewidth}
+  Soit $\epsilon > 0$ un seuil arbitraire:
+  \[ 
+  \forall \alpha \geq \epsilon, f(\alpha) < \frac{1}{2} 
+  \]      
+\end{minipage}
+
+%------------------------------------------------
+\subsection{Polices de caractères spécifiques}
+
+\begin{table}[H]
+  \centering\small
+  \begin{tabular}{c|l}
+    \verb!\mathbb{...}!  & Alphabet \emph{blackboard}: $\mathbb{A}\mathbb{B}\mathbb{C}\ldots\mathbb{N}\ldots\mathbb{Z}$ \\
+    \verb!\mathcal{...}! & Alphabet \emph{calligraphié}: $\mathcal{A}\mathcal{B}\mathcal{C}\ldots$ \\
+    \verb!\mathfrak{...}! & Alphabet \emph{Euler Fraktur}: $\mathfrak{A}\mathfrak{B}\mathfrak{C}\ldots\mathfrak{a}\mathfrak{b}\mathfrak{c}\ldots\mathfrak{1}\mathfrak{2}\mathfrak{3}\ldots$ \\
+    \verb!\mathbf{...}! & $\mathbf{Gras}$  \\
+    \verb!\mathit{...}! & $\mathit{Italic}$\\
+    \verb!\mathrm{...}! & Police $\mathrm{roman}$\\
+    \verb!\mathsf{...}! & Police $\mathrm{Sans\ serif}$\\
+    \verb!\mathtt{...}! & Police $\mathtt{Typewriter}$
+  \end{tabular}
+\end{table}
+
+
+%-----------------------------
+\subsection{Symboles spéciaux}
+\label{sec:maths_special}
+
+Les paragraphes qui suivent listent les symboles les plus courants.
+Pour une liste plus exhaustive, la bible des symboles \LaTeX\ est disponible en
+ligne
+\href{http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf}{sur
+le site du CTAN}.
+
+%...............................................
+\subsubsection{Caractères et constructions spéciaux}
+
+\begin{center}\small
+  \begin{tabular}{lllll}
+    $\hat{a}$ \verb!\hat{a}!     & $\acute{a}$ \verb!\acute{a}! & $\bar{a}$ \verb!\bar{a}! & $\dot{a}$ \verb!\dot{a}!   & $\breve{a}$ \verb!\breve{a}! \\
+    $\check{a}$ \verb!\check{a}! & $\grave{a}$ \verb!\grave{a}! & $\vec{a}$ \verb!\vec{a}! & $\ddot{a}$ \verb!\ddot{a}! & $\tilde{a}$ \verb!\tilde{a}!
+  \end{tabular}
+\vspace{1em}
+
+  \begin{tabular}{ll}
+    $\overleftarrow{abc}$ \verb!\overleftarrow{abc}!   & $\overrightarrow{abc}$ \verb!\overrightarrow{abc}!\\
+    $\overline{abc}$ \verb!\overline{abc}!             & $\underline{abc}$ \verb!\underline{abc}!  \\
+    $\widetilde{abc}$ \verb!\widetilde{abc}!           & $\widehat{abc}$ \verb!\widehat{abc}!\\
+    $\xrightarrow{\text{abc}}$ \verb!\xrightarrow{\text{abc}}! & $\xleftarrow{\text{abc}}$ \verb!\xleftarrow{\text{abc}}!\\
+    $\overbrace{abc}$ \verb!\overbrace{abc}!           & $\underbrace{abc}$ \verb!\underbrace{abc}!\\
+% & $\{abc}$ \verb!\{abc}! & $\{abc}$ \verb!\{abc}!
+  \end{tabular}
+\end{center}
+
+
+
+%...................................
+\subsubsection{Les lettres grecques}
+
+Elles sont obtenues à partir du nom de la lettre précédé par un antislash \verb!\!. 
+Certaines possèdent une variante préfixée par \verb!\var!.
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll@{~~~}ll@{~~~}ll}
+    $\alpha$ & \verb!\alpha!           & $\theta $ & \verb!\theta!        & $\pi $ & \verb!\pi!             & $\phi $ & \verb!\phi!\\
+    $\beta $ & \verb!\beta!            & $\vartheta $ & \verb!\vartheta!  & $\varpi $ & \verb!\varpi!       & $\varphi $ & \verb!\varphi!\\
+    $\gamma$ & \verb!\gamma!           & $\iota $ & \verb!\iota!          & $\rho $ & \verb!\rho!           & $\chi $ & \verb!\chi! \\
+    $\delta$ & \verb!\delta!           & $\kappa $ & \verb!\kappa!        & $\varrho $ & \verb!\varrho!     & $\psi $ & \verb!\psi!\\
+    $\epsilon$ & \verb!\epsilon!       & $\lambda $ & \verb!\lambda!      & $\sigma $ & \verb!\sigma!       & $\omega$ & \verb!\omega!\\
+    $\varepsilon$ & \verb!\varepsilon! & $\mu $ & \verb!\mu!              & $\varsigma $ & \verb!\varsigma!  \\
+    $\zeta$ & \verb!\zeta!             & $\nu $ & \verb!\nu!              & $\tau $ & \verb!\tau!            \\
+    $\eta $ & \verb!\eta!              & $\xi $ & \verb!\xi!              & $\upsilon $ & \verb!\upsilon!
+  \end{tabular}
+\end{center}
+
+Certaines lettres existent sous forme majuscule: 
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll@{~~~}ll}
+    $\Gamma$ & \verb!\Gamma!   & $\Xi$    & \verb!\Xi!        & $\Phi$   & \verb!\Phi!\\
+    $\Delta$ & \verb!\Delta!   & $\Pi$  & \verb!\Pi!          & $\Psi$    & \verb!\Psi! \\
+    $\Theta$ & \verb!\Theta!   & $\Sigma$ & \verb!\Sigma!     & $\Omega$ & \verb!\Omega!\\
+    $\Lambda$ & \verb!\Lambda! & $\Upsilon$ & \verb!\Upsilon! 
+  \end{tabular}
+\end{center}
+
+%.....................................
+\subsubsection{Symboles mathématiques}
+\label{sub:math_symbole}
+
+%__________________________
+\paragraph{Symboles divers.}
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll}
+    $\aleph$ & \verb!\aleph!     & $\prime$ & \verb!\prime!         & $\forall$ & \verb!\forall!\\
+    $\hbar$ & \verb!\hbar!       & $\emptyset$ & \verb!\emptyset!   & $\exists$ & \verb!\exists!\\
+    $\imath$ & \verb!\imath!     & $\nabla$ & \verb!\nabla!         & $\neg$ & \verb!\neg! ou \verb!\lnot!\\
+    $\jmath$ & \verb!\jmath!     & $\surd$ & \verb!\surd!           & $\flat$ & \verb!\flat!\\
+    $\ell$ & \verb!\ell!         & $\top$ & \verb!\top!             & $\natural$ & \verb!\natural!\\
+    $\wp$ & \verb!\wp!           & $\bot$ & \verb!\bot!             & $\sharp$ & \verb!\sharp!\\
+    $\Re$ & \verb!\Re!           & $\|$ & \verb!\|!                 & $\clubsuit$ & \verb!\clubsuit!\\
+    $\Im$ & \verb!\Im!           & $\angle$ & \verb!\angle!         & $\diamondsuit$ & \verb!\diamondsuit!\\
+    $\partial$ & \verb!\partial! & $\triangle$ & \verb!\triangle!   & $\heartsuit$ & \verb!\heartsuit!\\
+    $\infty$ & \verb!\infty!     & $\backslash$ & \verb!\backslash! & $\spadesuit$ & \verb!\spadesuit!\\
+  \end{tabular}
+\end{center}
+
+%________________________________________________
+\paragraph{Symboles de tailles variables et délimiteurs.}
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll@{~~~}ll}
+    $\sum$ & \verb!\sum!       &  $\oint$ & \verb!\oint!        & $\bigvee$ & \verb!\bigvee!        & $\bigodot$ & \verb!\bigodot! \\
+    $\prod$ & \verb!\prod!     & $\bigcap$ & \verb!\bigcap!     & $\bigwedge$ & \verb!\bigwedge!    & $\bigotimes$ & \verb!\bigotimes! \\
+    $\coprod$ & \verb!\coprod! & $\bigcup$ & \verb!\bigcup!     & $\bigoplus$ & \verb!\bigoplus! \\
+    $\int$ & \verb!\int!       & $\bigsqcup$ & \verb!\bigsqcup! & $\biguplus$ & \verb!\biguplus! \\
+    \hline
+    $\{$ & \verb!\{!           & $($ & \verb!(!             & $\|$ & \verb!\|!         & $\lbrace$ & \verb!\lbrace! \\ 
+    $\}$ & \verb!\}!           & $)$ & \verb!)!             & $|$  & \verb!|!          & $\rbrace$ & \verb!\rbrace!\\
+    $\lbrack$ & \verb!\lbrack! & $\lfloor$ & \verb!\lfloor! & $\lceil$ & \verb!\lceil! & $\langle$ & \verb!\langle!\\ 
+    $\rbrack$ & \verb!\rbrack! & $\rfloor$ & \verb!\rfloor! & $\rceil$ & \verb!\rceil! & $\rangle$ & \verb!\rangle!\\
+  \end{tabular}
+\end{center}
+\vspace{1em}
+Les délimiteurs encadrent une expression entre \verb!\left!\emph{delimiteur} et \verb!\right!\emph{delimiteur} 
+(le délimiteur \og \texttt{.}\fg\  sert alors de délimiteur vide).
+
+%______________________________
+\paragraph{Opérations binaires.}
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll}
+    $\pm$ & \verb!\pm!             & $\cap$ & \verb!\cap!                     & $\vee$ & \verb!\vee! ou \verb!\lor!\\
+    $\mp$ & \verb!\mp!             & $\cup$ & \verb!\cup!                     & $\wedge$ & \verb!\wedge! ou \verb!\land!\\
+    $\setminus$ & \verb!\setminus! & $\uplus$ & \verb!\uplus!                 & $\oplus$ & \verb!\oplus!\\
+    $\cdot$ & \verb!\cdot!         & $\sqcap$ & \verb!\sqcap!                 & $\ominus$ & \verb!\ominus!\\
+    $\times$ & \verb!\times!       & $\sqcup$ & \verb!\sqcup!                 & $\otimes$ & \verb!\otimes!\\
+    $\ast$ & \verb!\ast!           & $\triangleleft$ & \verb!\triangleleft!   & $\oslash$ & \verb!\oslash!\\
+    $\star$ & \verb!\star!         & $\triangleright$ & \verb!\triangleright! & $\odot$ & \verb!\odot!\\
+    $\diamond$ & \verb!\diamond!   & $\wr$ & \verb!\wr!                       & $\dagger$ & \verb!\dagger!\\
+    $\circ$ & \verb!\circ!         & $\bigcirc$ & \verb!\bigcirc!             & $\ddagger$ & \verb!\ddagger!\\
+    $\bullet$ & \verb!\bullet!     & $\bigtriangleup$ & \verb!\bigtriangleup! & $\amalg$ & \verb!\amalg!\\
+    $\div$ & \verb!\div!           & $\bigtriangledown$ & \verb!\bigtriangledown!\\
+  \end{tabular}
+\end{center}
+
+\clearpage
+%____________________
+\paragraph{Relations.}
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll}
+    $\leq$ & \verb!\leq! ou \verb!\le! & $\geq$ & \verb!\geq! ou \verb!\le! & $\equiv$ & \verb!\equiv!\\
+    $\prec$ & \verb!\prec!             & $\succ$ & \verb!\succ!             & $\sim$ & \verb!\sim!\\
+    $\preceq$ & \verb!\preceq!         & $\succeq$ & \verb!\succeq!         & $\simeq$ & \verb!\simeq!\\
+    $\ll$ & \verb!\ll!                 & $\gg$ & \verb!\gg!                 & $\asymp$ & \verb!\asymp!\\
+    $\subset$ & \verb!\subset!         & $\supset$ & \verb!\supset!         & $\approx$ & \verb!\approx!\\
+    $\subseteq$ & \verb!\subseteq!     & $\supseteq$ & \verb!\supseteq!     & $\cong$ & \verb!\cong!\\
+    $\sqsubseteq$ & \verb!\sqsubseteq! & $\sqsupseteq$ & \verb!\sqsupseteq! & $\bowtie$ & \verb!\bowtie!\\
+    $\in$ & \verb!\in!                 & $\ni$ & \verb!\ni! ou \verb!\owns! & $\propto$ & \verb!\propto!\\
+    $\vdash$ & \verb!\vdash!           & $\dashv$ & \verb!\dashv!           & $\models$ & \verb!\models!\\
+    $\smile$ & \verb!\smile!           & $\mid$ & \verb!\mid!               & $\doteq$ & \verb!\doteq!\\
+    $\frown$ & \verb!\frown!           & $\parallel$ & \verb!\parallel!     & $\perp$ & \verb!\perp!\\
+  \end{tabular}
+\end{center}
+%_______________________________
+ \paragraph{Relations contraires.}
+
+Elles sont généralement obtenues en préfixant la relation par \verb!\not!. 
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll}
+    $\not<$ & \verb!\not<!                     & $\not>$ & \verb!\not>!                     & $\not=$ & \verb!\not=! ou \verb!\neq!\\  
+    $\not\leq$ & \verb!\not\leq!               & $\not\geq$ & \verb!\not\geq!               & $\not\equiv$ & \verb!\not\equiv! \\
+    $\not\prec$ & \verb!\not\prec!             & $\not\succ$ & \verb!\not\succ!             & $\not\sim$ & \verb!\not\sim! \\
+    $\not\preceq$ & \verb!\not\preceq!         & $\not\succeq$ & \verb!\not\succeq!         & $\not\simeq$ & \verb!\not\simeq! \\
+    $\not\subset$ & \verb!\not\subset!         & $\not\supset$ & \verb!\not\supset!         & $\not\approx$ & \verb!\not\approx! \\
+    $\not\subseteq$ & \verb!\not\subseteq!     & $\not\supseteq$ & \verb!\not\supseteq!     & $\not\cong$ & \verb!\not\cong! \\
+    $\not\sqsubseteq$ & \verb!\not\sqsubseteq! & $\not\sqsupseteq$ & \verb!\not\sqsupseteq! & $\not\asymp$ & \verb!\not\asymp! \\
+  \end{tabular}
+\end{center}
+
+%___________________________
+\paragraph{Flèches et pointillés.}
+
+\begin{center}\small
+  \begin{tabular}{ll@{~~~}ll@{~~~}ll}
+    $\leftarrow$ & \verb!\leftarrow! ou \verb!\gets!   & $\rightarrow$ & \verb!\rightarrow! ou \verb!\to!\\
+    $\longleftarrow$ & \verb!\longleftarrow!           & $\longrightarrow$ & \verb!\longrightarrow!\\
+    $\Leftarrow$ & \verb!\Leftarrow!                   & $\Rightarrow$ & \verb!\Rightarrow!\\
+    $\Longleftarrow$ & \verb!\Longleftarrow!           & $\Longrightarrow$ & \verb!\Longrightarrow!\\
+    $\leftrightarrow$ & \verb!\leftrightarrow!         & $\Leftrightarrow$ & \verb!\Leftrightarrow!\\
+    $\longleftrightarrow$ & \verb!\longleftrightarrow! & $\Longleftrightarrow$ & \verb!\Longleftrightarrow! ou \verb!\iff!\\
+    $\hookleftarrow$ & \verb!\hookleftarrow!           & $\hookrightarrow$ & \verb!\hookrightarrow!\\
+    $\leftharpoonup$ & \verb!\leftharpoonup!           & $\rightharpoonup$ & \verb!\rightharpoonup!\\
+    $\leftharpoondown$ & \verb!\leftharpoondown!       & $\rightharpoondown$ & \verb!\rightharpoondown!\\
+    $\uparrow$ & \verb!\uparrow!                       & $\downarrow$ & \verb!\downarrow!\\
+    $\Uparrow$ & \verb!\Uparrow!                       & $\Downarrow$ & \verb!\Downarrow!\\
+    $\updownarrow$ & \verb!\updownarrow!               & $\Updownarrow$ & \verb!\Updownarrow!\\
+    $\nearrow$ & \verb!\nearrow!                       & $\nwarrow$ & \verb!\nwarrow!\\
+    $\searrow$ & \verb!\searrow!                       & $\swarrow$ & \verb!\swarrow!\\
+    $\mapsto$ & \verb!\mapsto!                         & $\longmapsto$ & \verb!\longmapsto!\\
+    $\leftrightharpoons$ & \verb!\leftrightharpoons!   & $\rightleftharpoons$ & \verb!\rightleftharpoons!   \\
+    $\curvearrowleft$ & \verb!\curvearrowleft!         & $\curvearrowright$ & \verb!\curvearrowright!\\
+    $\ldots$ & \verb!\ldots!                           & $\cdots$ & \verb!\cdots!\\
+    $\vdots$ & \verb!\vdots!                           & $\ddots$  & \verb!\ddots!                 
+ \end{tabular}
+\end{center}
+
+%...............................
+\subsubsection{Fonctions standards (sin, cos etc...)}
+
+Certaines abreviations/fonctions standards existent déjà en \LaTeX. 
+
+Ainsi, on peut obtenir:
+\[ \cos(\theta + \phi) = \cos \theta \cos \phi
+      - \sin \theta \sin \phi \]
+en tapant
+\begin{lstlisting}
+\[ 
+   \cos(\theta + \phi) = \cos \theta \cos \phi - \sin \theta \sin \phi 
+\]
+\end{lstlisting}
+Voici la liste des séquences à utiliser:
+\begin{center}\small
+  \begin{tabular}{llllllll}
+    \verb!\arccos! & \verb!\cos! & \verb!\csc! & \verb!\exp! & \verb!\ker! & \verb!\limsup! & \verb!\min! & \verb!\sinh!\\
+    \verb!\arcsin! & \verb!\cosh! & \verb!\deg! & \verb!\gcd! & \verb!\lg! & \verb!\ln! & \verb!\Pr! & \verb!\sup!\\
+    \verb!\arctan! & \verb!\cot! & \verb!\det! & \verb!\hom! & \verb!\lim! & \verb!\log! & \verb!\sec! & \verb!\tan!\\
+    \verb!\arg! & \verb!\coth! & \verb!\dim! & \verb!\inf! & \verb!\liminf! & \verb!\max! & \verb!\sin! & \verb!\tanh!\\
+ \end{tabular}
+\end{center}
+
+%--------------------------------
+\subsection{Structures courantes}
+\label{sec:math_struct}
+
+%...................................
+\subsubsection{Indices et exposants}
+
+Un indice s'obtient à l'aide de \texttt{\_} et un exposant avec \verb!^!.
+Exemple: 
+\begin{center}
+  \begin{tabular}{cc|cc}
+    $x_i$          & \verb!x_i!            & $x^i$    & \verb!x^i! \\
+    $x_{i-1}^{j-1}$ &  \verb!x_{i-1}^{j-1}! & $x_{u_n}$ & \verb!x_{u_n}!
+  \end{tabular}
+\end{center}
+
+%........................
+\subsubsection{Fractions}
+
+La commande \verb!\frac{!\emph{num}\verb!}{!\emph{den}\verb!}! produit une fraction de 
+numérateur \emph{num} et de dénominateur \emph{den}. Exemple: 
+
+\begin{minipage}{0.5\linewidth}
+  \begin{lstlisting}
+$\frac{1}{2}$ dans une phase. Sinon:
+\[
+  \frac{3x+1}{1-x^2}
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+$\frac{1}{2}$ dans une phase. Sinon:
+\[
+  \frac{3x+1}{1-x^2}
+\]
+\end{minipage}
+
+À noter que la plupart des fractions écrites au sein d'une phrase ont un meilleur rendu lorsqu'elles
+sont précédées de la commande \verb!\displaystyle!. Exemple: 
+
+\begin{minipage}{0.6\linewidth}
+  \begin{lstlisting}
+$\displaystyle\frac{1}{2}$ dans une phase. 
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\linewidth}
+$\displaystyle\frac{1}{2}$ dans une phase. 
+\end{minipage}
+\verb!\dfrac! est un raccourci à la séquence \verb!\displaystyle\frac!.
+
+Enfin, on utilise la commande \verb!\cfrac! pour les fractions continuées: 
+
+\begin{minipage}{0.72\linewidth}
+  \begin{lstlisting}
+\[
+  \cfrac{2}{1+\cfrac{2}{1+\cfrac{2}{1+\cfrac{2}{1}}}}
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+\[
+\cfrac{2}{1+\cfrac{2}{1+\cfrac{2}{1}}}
+\]
+\end{minipage}
+
+
+
+%......................
+\subsubsection{Racines}
+
+On utilise la commande \verb!\sqrt{...}!. Exemple:
+\begin{center}
+  \begin{tabular}[hc]{ll}
+    $\sqrt{1-x^2}$                & \verb!\sqrt{1-x^2}!\\
+    $\sqrt[3]{\frac{1}{1-x^2}}$   & \verb!\sqrt[3]{\frac{1}{1-x^2}}! \\
+    $\sqrt{1+\sqrt{1+\sqrt{1+\cdots}}}$ & \verb!\sqrt{1+\sqrt{1+\sqrt{1+\cdots}}}!
+  \end{tabular}
+\end{center}
+
+%...................................
+\subsubsection{Points de suspension}
+
+\LaTeX\ propose quatre types de points de suspension: 
+\begin{center}
+  \begin{tabular}[hc]{llllllll}
+    \verb!\ldots! & $\ldots$          & \verb!\cdots! & $\cdots$ &
+    \verb!\vdots! & $\vdots$          & \verb!\ddots! & $\ddots$ 
+  \end{tabular}
+\end{center}
+
+La commande \verb!\ldots! peut s'utiliser également en mode texte. 
+La distinction entre \verb!\ldots! et \verb!\cdots! est la hauteur sur la ligne, 
+comme le montre l'exemple suivant:
+\begin{center}
+  \begin{tabular}[hc]{ll}
+    \verb!x_1,\ldots,x_n! & $x_1,\ldots,x_n$ \\
+    \verb!x_1+\cdots+x_n! & $x_1+\cdots+x_n$ \\
+  \end{tabular}
+\end{center}
+
+%.........................
+\subsubsection{Intégrales}
+
+On utilise le mot clé \verb!\int!. Exemple (\verb!\,! permet 
+d'obtenir un espace supplémentaire: voir \S\ref{sub:espace_math}): 
+
+\begin{minipage}{0.52\linewidth}
+  \begin{lstlisting}
+\[
+  \int_0^{+\infty} x^n e^{-x}\,dx = n!
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \[
+    \int_0^{+\infty} x^n e^{-x}\,dx = n!
+  \]
+\end{minipage}
+
+Pour les intégrales multiples, on peut utiliser \verb!\!! pour produire des espaces 
+négatifs et améliorer la lisibilité. Exemple:
+
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\[ 
+  \int \int_D f(x,y)\,dx\,dy = 
+  \int \!\!\!\int_D f(x,y)\,dx\,dy 
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[ 
+  \int \int_D f(x,y)\,dx\,dy = 
+  \int \!\!\!\int_D f(x,y)\,dx\,dy 
+\]
+\end{minipage}
+
+%.................................
+\subsubsection{Sommes et produits}
+
+Il faut alors utiliser les commandes \verb!\sum! et \verb!\prod!. 
+Exemple: 
+
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\[ 
+  \sum_{k=1}^n k = \frac{n(n+1)}{2}
+  \text{~et~}
+  \prod_{k=1}^n(1-a^k) 
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[ 
+  \sum_{k=1}^n k = \frac{n(n+1)}{2}
+  \text{~et~}
+  \prod_{k=1}^n(1-a^k) 
+\]
+\end{minipage}
+
+%......................
+\subsubsection{Limites, inf, sup}
+
+Ces expressions sont obtenues grâce  aux commandes \verb!\lim!, \verb!\inf! et 
+\verb!\sup!. 
+
+Ainsi, \verb/\lim_{x \to +\infty}/, \verb/\inf_{x > s}/ et \verb/\sup_K/ 
+produiront respectivement :
+\[ \lim_{x \to +\infty} \mbox{, } \inf_{x > s} \mbox{ et } \sup_K \]
+
+
+%..............................................
+\subsubsection{Dérivées et dérivées partielles}
+
+\begin{minipage}{0.6\linewidth}
+  \begin{lstlisting}
+\[ 
+  \frac{du}{dt} \text{ et } \frac{d^2 u}{dx^2}
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[ 
+  \frac{du}{dt} \text{ et } 
+  \frac{d^2 u}{dx^2}
+\]
+\end{minipage}
+
+Le symbole de dérivée partielle $\partial$ est produit par \verb/\partial/. 
+Ainsi, l'équation de diffusion de la chaleur 
+\[
+  \frac{\partial u}{\partial t} = 
+      \frac{\partial^2 u}{\partial x^2} + 
+      \frac{\partial^2 u}{\partial y^2} + 
+      \frac{\partial^2 u}{\partial z^2} 
+\]  
+est obtenue en tapant :
+\begin{lstlisting}
+\[
+  \frac{\partial u}{\partial t} = 
+      \frac{\partial^2 u}{\partial x^2} + 
+      \frac{\partial^2 u}{\partial y^2} + 
+      \frac{\partial^2 u}{\partial z^2} 
+\]  
+\end{lstlisting}
+
+%..............................................
+\subsubsection{Modulos}
+
+Il existe plusieurs commandes pour afficher les calculs modulaires:
+\begin{center}
+  \begin{tabular}{l@{~~~}l}
+    \verb!9\equiv 3 \bmod{6}! & $9\equiv 3 \bmod{6}$ \\
+    \verb!9\equiv 3 \pmod{6}! & $9\equiv 3 \pmod{6}$\\
+    \verb!9\equiv 3 \mod{6}!  & $9\equiv 3 \mod{6}$\\
+    \verb!9\equiv 3 \pod{6}!  & $9\equiv 3 \pod{6}$\\
+  \end{tabular}
+\end{center}
+
+%..............................................
+\subsubsection{Coefficients binomiaux}
+
+On utilise la commande \verb!\binom{!\emph{n}\verb!}{!\emph{k}\verb!}!. Exemple:
+
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\[ 
+  \binom{n}{k} + \binom{n}{k+1} = 
+  \binom{n+1}{k+1} 
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[ 
+  \binom{n}{k} + \binom{n}{k+1} = \binom{n+1}{k+1} 
+\]
+\end{minipage}
+
+
+%..............................................
+\subsubsection{Matrices et tableaux }
+
+On utilise l'environnement \verb!array! et sa gestion est similaire à celle des 
+tableaux du mode texte (voir \S\ref{sec:tableau_figure}, page~\pageref{sec:tableau_figure}).
+Par exemple : 
+\begin{quotation}
+Le \emph{polynôme caractéristique} $\chi(\lambda)$ de la matrice 
+$3 \times 3$: 
+\[ \left( 
+ \begin{array}{ccc}
+   a & b & c \\
+   d & e & f \\
+   g & h & i 
+  \end{array} \right) \] 
+est donné par la formule
+\[ \chi(\lambda) = 
+\left| 
+ \begin{array}{ccc}
+   \lambda - a & -b & -c \\
+   -d & \lambda - e & -f \\
+   -g & -h & \lambda - i 
+\end{array} 
+\right|.\] 
+\end{quotation}
+
+Ce passage est produit par:
+
+\begin{lstlisting}
+Le \emph{polynôme caractéristique} $\chi(\lambda)$ de la matrice 
+$3 \times 3$: 
+\[ \left( 
+ \begin{array}{ccc}
+   a & b & c \\
+   d & e & f \\
+   g & h & i 
+  \end{array} \right) \] 
+est donné par la formule
+\[ \chi(\lambda) = 
+\left| 
+ \begin{array}{ccc}
+   \lambda - a & -b & -c \\
+   -d & \lambda - e & -f \\
+   -g & -h & \lambda - i 
+\end{array} 
+\right|.\] 
+\end{lstlisting}
+
+A noter l'utilisation des mots clés \verb!\left! (respectivement \verb!\right!) 
+suivi d'un délimiteur ouvrant (respectivement fermant) 
+(défini dans le \S\ref{sub:math_symbole}). 
+Ces deux séquences sont indissociables.
+On peut remplacer un délimiteur par un point '.' pour spécifier l'absence de 
+délimiteur. Un exemple sera sans doute plus parlant:
+\begin{lstlisting}
+\[ \left| 4 x^3 + \left( x + \frac{42}{1+x^4} \right) \right|.\]
+\[ \left. \frac{du}{dx} \right|_{x=0}.\] 
+\end{lstlisting}
+produit:
+\[ \left| 4 x^3 + \left( x + \frac{42}{1+x^4} \right) \right|.\]
+\[ \left. \frac{du}{dx} \right|_{x=0}.\] 
+
+Le package amsmath propose également des environements dédiés aux matrices, plus précisément 
+\texttt{pmatrix}, \texttt{bmatrix}, \texttt{Bmatrix}, \texttt{vmatrix} et \texttt{Vmatrix}. 
+Ils  intègrent différents délimiteurs, respectivement 
+$( )$, $[ ]$, $\{ \}$, $| |$ et $\| \|$. Exemple: 
+
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\[
+\begin{pmatrix}
+  a_{1,1} & a_{1,2} & \dots   & a_{1,n}\\
+  a_{2,1} & a_{2,2} & \dots   & a_{2,n}\\
+  \vdots & \vdots  & \ddots & \vdots\\
+  a_{n,1} & a_{n,2} & \dots   & a_{n,n}\\      
+\end{pmatrix}
+\]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[
+\begin{pmatrix}
+  a_{1,1} & a_{1,2} & \dots  & a_{1,n}\\
+  a_{2,1} & a_{2,2} & \dots  & a_{2,n}\\
+  \vdots & \vdots  & \ddots & \vdots\\
+  a_{n,1} & a_{n,2} & \dots  & a_{n,n}\\      
+\end{pmatrix}
+\]
+\end{minipage}
+
+%.....................
+\subsubsection{Normes}
+
+Elles sont obtenues par \verb!\|!.
+Exemple:
+\begin{lstlisting}
+Soit $X$ un espace de Banach et soit $f \colon B \to \mathbb{R}$
+un fonction linéaire bornée sur $X$. 
+La \emph{norme} de $f$, notée $\|f\|$, est définie par:
+\[ \|f\| = \inf \{ K \in [0,+\infty) :
+          |f(x)| \leq K \|x\| \,\forall x \in X \}.\] 
+\end{lstlisting}
+produit:
+\begin{quote}
+Soit $X$ un espace de Banach et soit $f \colon B \to \mathbb{R}$
+un fonction linéaire bornée sur $X$. 
+La \emph{norme} de $f$, notée $\|f\|$, est définie par:
+\[ \|f\| = \inf \{ K \in [0,+\infty) :
+          |f(x)| \leq K \|x\| \,\forall  x \in X \}.\] 
+\end{quote}
+
+%............................
+\subsubsection{Les équations}
+
+
+\paragraph{Sur une seule ligne}
+
+On utilise l'environnement \verb!equation!:\\
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\begin{equation}\label{eq:test}
+  f(x) + g(x) = \frac{1}{x-1} 
+\end{equation}
+L'équation~\ref{eq:test}...
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\begin{equation}\label{eq:test}
+  f(x) + g(x) = \frac{1}{x-1} 
+\end{equation}
+L'équation~\ref{eq:test}...
+\end{minipage}
+
+Comme toujours, on peut supprimer la numérotation en utilisant 
+
+\verb!\begin{equation*}...\end{equation*}! (ou simplement écrire la formule :-)
+
+
+\paragraph{Sur plusieurs lignes, alignées}
+
+On utilise alors l'environnement \verb!\equarray*!:
+
+\begin{lstlisting}
+\begin{eqnarray*}
+\cos 2\theta & = & \cos^2 \theta - \sin^2 \theta \\
+             & = & 2 \cos^2 \theta - 1.
+\end{eqnarray*}
+\end{lstlisting}
+
+produit :
+\begin{eqnarray*}
+\cos 2\theta & = & \cos^2 \theta - \sin^2 \theta \\
+             & = & 2 \cos^2 \theta - 1.
+\end{eqnarray*}
+
+On aura compris que cela marche comme un tableau. Sans le caractère '*', chaque 
+ligne sera numérotée.
+
+%...............................................
+\subsubsection{Les alternatives conditionnelles}
+\label{sub:alternative}
+
+\begin{minipage}{0.5\linewidth}
+  \begin{lstlisting}
+\[ f(x) = 
+\left\{
+  \begin{array}{ll}
+    4x^2-3   & \mbox{ si $x \ge 0$}\\
+    x^2-2x-4 & \mbox{ si $x < 0$}
+  \end{array}
+\right. \]
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\[ f(x) = 
+\left\{
+  \begin{array}{ll}
+    4x^2-3   & \mbox{ si $x \ge 0$}\\
+    x^2-2x-4 & \mbox{ si $x < 0$}
+  \end{array}
+\right. \]
+\end{minipage}
+
+On peut aussi utiliser le package \verb!amsmath! et l'environnement \verb!cases!:
+
+\begin{minipage}{0.55\linewidth}
+  \begin{lstlisting}
+\begin{equation*}
+  |x|=
+     \begin{cases}
+        -x & \text{si $x$ est impair} \\
+        x  & \text{si $x$ est pair ou nul}
+     \end{cases}
+\end{equation*}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+\begin{equation*}
+  |x|=
+     \begin{cases}
+        -x & \text{si $x$ est impair} \\
+        x  & \text{si $x$ est pair ou nul}
+     \end{cases}
+\end{equation*}
+\end{minipage}
+
+%---------------------------------------
+\subsection{Les ensembles mathématiques}
+\label{sec:ensembles}
+
+Il existe deux façons d'obtenir l'écriture des ensembles mathématiques:
+\begin{enumerate}
+  \item En utilisant les fonts AMS. 
+    Pour cela, il faut insérer les packages AMS dans l'en-tête du document par 
+    \verb!\usepackage{amsmath,amssymb}!. 
+    
+    puis utiliser la commande \verb!\mathbb{}!.
+    
+    Ainsi, $\R$  obtenu au choix par \verb!\mathbb{R}! ou 
+    par \verb!\R! (après avoir redéfini cette commande 
+    en en-tête par \verb!\newcommand{\R}{\mathbb{R}}!.
+  \item Sans disposer des packages AMS : il faut alors définir les 
+    commandes suivantes dans l'en-tête du document:
+    \begin{center}
+      \begin{tabular}[hc]{ll}
+        pour les naturels:  & \verb!\def\N{\mbox{I\hspace{-.15em}N}}! \\
+        pour les entiers:   & \verb!\def\Z{\mbox{Z\hspace{-.3em}Z}}! \\
+        pour les reels:     & \verb!\def\R\mbox{I\hspace{-.15em}R}}! \\
+        pour les complexes: & \verb!\def\C{\mbox{l\hspace{-.47em}C}}!
+      \end{tabular}
+    \end{center}
+    Ensuite, il suffit d'appeler \verb!$\N$!, \verb!$\R$! etc...
+\end{enumerate}
+
+
+%-------------------------------------------------------
+\subsection{Polices de caractères en mode mathématiques}
+\label{sec:math_polices}
+
+Toutes les polices de caractères vues dans le \S\ref{sub:polices}, 
+page~\pageref{sub:polices} ont leur équivalent dans le mode mathématique. 
+On utilisera ainsi \verb!\mathbf{}! au lieu de \verb!\textbf{}!.
+
+Exemple: 
+\begin{lstlisting}
+Soient $\vec{\mathbf{u}}$,$\vec{\mathbf{v}}$ et $\vec{\mathbf{w}}$ 
+trois vecteurs de ${\mathbb R}^3$. 
+Le volume~$V$ du parallélépipède .... est donné par la formule:
+\[ 
+V = (\vec{\mathbf{u}} \times \vec{\mathbf{v}}) \cdot \vec{\mathbf{w}}.
+\] 
+\end{lstlisting}
+produit:
+\begin{quote}
+Soient $\vec{\mathbf{u}}$,$\vec{\mathbf{v}}$ et $\vec{\mathbf{w}}$ 
+trois vecteurs de ${\mathbb R}^3$. 
+Le volume~$V$ du parallélépipède .... est donné par la formule:
+\[ V = (\vec{\mathbf{u}} \times \vec{\mathbf{v}}) \cdot \vec{\mathbf{w}}.\] 
+\end{quote}
+
+Il existe également une police de caractère 'calligraphique' (\emph{réservée aux 
+lettres majuscules}) qui s'obtient par la séquence \verb!\mathcal{}!. Ex:
+\[ 
+\mathcal{A}\mathcal{B}\mathcal{C}\mathcal{D}\mathcal{E}\mathcal{F}\mathcal{G}
+\mathcal{H}\mathcal{I}\mathcal{J}\mathcal{K}\mathcal{L}\mathcal{M}\mathcal{N}
+\mathcal{O}\mathcal{P}\mathcal{Q}\mathcal{R}\mathcal{S}\mathcal{T}\mathcal{U}
+\mathcal{V}\mathcal{W}\mathcal{X}\mathcal{Y}\mathcal{Z}. 
+\]
+
+%.................................................
+\subsubsection{Accentuations en mode mathématique}
+
+Elles sont résumées dans le tableau~\ref{tab:math_accent}.
+
+\def\exhibitaccent#1#2{\rlap{$\csname #1\endcsname{#2}$}%
+                      \qquad \texttt{\char92 #1\char123 #2\char125}}
+\begin{table}[h]
+ \centering\small
+ \begin{tabular}{|l|l|}
+   \hline
+   $\exhibitaccent{underline}{a}$ & $\exhibitaccent{hat}{a}$ \\
+   $\exhibitaccent{overline}{a}$ & $\exhibitaccent{check}{a}$ \\
+   $\exhibitaccent{tilde}{a}$ & $\exhibitaccent{acute}{a}$ \\
+   $\exhibitaccent{grave}{a}$ & $\exhibitaccent{dot}{a}$ \\
+   $\exhibitaccent{ddot}{a}$ & $\exhibitaccent{breve}{a}$ \\
+   $\exhibitaccent{bar}{a}$ & $\exhibitaccent{vec}{a}$ \\
+   \hline
+ \end{tabular}
+ \caption{\small Les accentuation en mode mathématique}
+ \label{tab:math_accent}
+\end{table} 
+
+%...............................................
+\subsubsection{Les espaces en mode mathématique}
+\label{sub:espace_math}
+
+\LaTeX\ ignore complètement les espaces dans les formules mathématiques. 
+Plus exactement, il adapte lui-même les espaces. 
+Dans certains cas, il est utile d'augmenter l'espace et dans d'autres de le 
+diminuer. Pour cela, \LaTeX\ offre quatres commandes:
+\verb!\,! (petit espace), \verb!\:! (espace moyen), \verb!\!! (petit espace négatif) et
+\verb!\;! (espace large).
+
+\iu{Remarque}: un espace négatif est utilisé pour rapprocher les signes 
+d'intégration d'une intégrale
+
+Sinon, il faut aussi l'utilisation de \verb!\mbox{}! ou \verb!\text{}! qui 
+permet de revenir 
+temporairement en mode texte au sein d'une formule mathématique. 
+Voir les exemples fournis en \S\ref{sub:alternative}, page~\pageref{sub:alternative}.
+
+
+%-------------------------------------------------------
+\subsection{Théorèmes, propositions, définitions etc...}
+\label{sec:theoremes}
+
+Le plus simple est d'utiliser la package \verb!amsthm!. 
+
+Ensuite, on définit de nouveaux environnements par le mot clé \verb!\newtheorem! 
+dans l'en-tete (voir \S\ref{sec:structure_generale}, 
+page~\pageref{sec:structure_generale}): 
+
+\begin{lstlisting}
+%pour les propositions, lemmes etc.... Utilise le package amsthm
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{proposition}{Proposition}[section]
+\end{lstlisting}
+Le paramètre \texttt{[section]} précise que l
+es théoremes seront numérotés avec le numéro 
+de section en prefixe (donc de la forme <numero\_section>.<numéro\_théorème>). 
+On peut alors dans le document créer un théorème par : 
+\begin{lstlisting}
+\begin{theoreme}[Critère d'Euler] \label{theo:crit_euler}
+Soit $p$ un nombre premier impair.
+$x$ est un résidu quadratique si, et seulement si 
+\[
+x^{(p-1)/2} \equiv 1 [p]
+\]
+\end{theoreme}
+\begin{proof}
+La preuve est à faire en exercice :-)
+\end{proof}
+Comme le montre le théoreme~\ref{theo:crit_euler}...
+\end{lstlisting}
+
+ce qui produit :
+
+\begin{quote}
+\begin{theoreme}[Critère d'Euler] \label{theo:crit_euler}
+Soit $p$ un nombre premier impair.
+$x$ est un résidu quadratique si, et seulement si 
+\[
+x^{(p-1)/2} \equiv 1 [p]
+\]
+\end{theoreme}
+   
+\begin{proof}
+La preuve est à faire en exercice :-)
+\end{proof}
+Comme le montre le théoreme~\ref{theo:crit_euler}...
+\end{quote}
+
+\iu{Remarques}:
+\begin{itemize}
+\item on aura compris que pour écrire une proposition, il suffira de taper\\
+    \verb!\begin{proposition}...\end{proposition}!.
+  \item On peut utiliser \verb!\newtheorem! pour des définitions numérotées.
+    On définit l'environnement en en-tête par :
+    \begin{lstlisting}
+\newtheorem{definition}{Définition}[section]
+\end{lstlisting}
+    
+    Ensuite, la séquence 
+     \begin{lstlisting}
+\begin{definition}\label{def:indice_coincidence}
+  Soit $x=x_1x_2\ldots x_n$ et $y=y_1y_2\ldots y_{n'}$ deux chaînes 
+  de longueurs respectives $n$ et $n'$.\\
+  L'\textbf{indice de coïncidence mutuel} de $x$ et $y$, noté $MI_c(x,y)$, 
+  est la probabilité  qu'un caractère aléatoire de $x$ soit égal à 
+  un caractère aléatoire de $y$.
+\end{definition} 
+A partir de la définition~\ref{def:indice_coincidence}...  
+\end{lstlisting}
+produira:
+\begin{quotation}
+  \begin{definition}\label{def:indice_coincidence}
+    Soit $x=x_1x_2\ldots x_n$ et $y=y_1y_2\ldots y_{n'}$ deux chaînes
+    de longueurs respectives $n$ et $n'$.\\
+    L'\textbf{indice de coïncidence mutuel} de $x$ et $y$, noté
+    $MI_c(x,y)$, est la probabilité qu'un caractère aléatoire de $x$
+    soit égal à un caractère aléatoire de $y$.
+  \end{definition}
+  A partir de la définition~\ref{def:indice_coincidence}...
+\end{quotation}
+\end{itemize}
+
+%-------------------------------------------------------
+\subsection{Division Euclidienne de polynômes}
+
+Récemment, il m'a été demandé une façon de réaliser en \LaTeX\ l'écriture 
+détaillée d'une division euclidienne de deux polynômes. 
+
+L'exemple suivant devrait se passer de commentaires et détaille la division 
+du polynôme $X^3+X+1$ par $X+1$.  
+\[
+ \begin{array}{rcrcrcrc|c}
+   X^3 &+&        & & X   &+& 1     & & X + 1       \\\cline{9-9}
+ -(X^3 &+& X^2)   & &     & &       & & X^2 - X + 2 \\\cline{1-3}
+       & & -X^2   &+& X   & &       & &             \\
+       & & -(-X^2 &-& X)  & &       & &             \\\cline{3-5}
+       & &        & & 2X  &+& 1     & & \\
+       & &        & &-(2X &+& 2)    & & \\\cline{5-7}
+       & &        & &     & & -1    & &
+ \end{array}
+\]
+
+Ce résultat est optenu à partir du code suivant: 
+\begin{lstlisting}
+\[
+ \begin{array}{rcrcrcrc|c}
+   X^3 &+&        & & X   &+& 1     & & X + 1       \\\cline{9-9}
+ -(X^3 &+& X^2)   & &     & &       & & X^2 - X + 2 \\\cline{1-3}
+       & & -X^2   &+& X   & &       & &             \\
+       & & -(-X^2 &-& X)  & &       & &             \\\cline{3-5}
+       & &        & & 2X  &+& 1     & & \\
+       & &        & &-(2X &+& 2)    & & \\\cline{5-7}
+       & &        & &     & & -1    & &
+ \end{array}
+\]
+\end{lstlisting}
+
+\iu{Remarque:} La commande \texttt{cline} est initialement présentée au 
+\S\ref{sec:tableau_figure}.
+
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+%
+% Local Variables:
+% mode: latex
+% End:

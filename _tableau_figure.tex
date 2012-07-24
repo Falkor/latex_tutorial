@@ -1,0 +1,338 @@
+% =======================================================================
+% File         : _tableau_figure.tex
+% Title        :
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 27 Jun 2007
+% Licence      : CC Creative Commons
+% Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+% 
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+% 
+% Selon les conditions suivantes :
+% 
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière
+% indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous
+% confère cette autorisation (mais pas d'une manière qui suggérerait
+% qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser
+% cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de
+% transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez
+% faire apparaître clairement au public les conditions contractuelles de
+% sa mise à disposition. La meilleure manière de les indiquer est un
+% lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation
+% du titulaire des droits sur cette oeuvre.
+% Rien dans ce contrat ne diminue ou ne restreint le droit moral de
+% l'auteur ou des auteurs.
+% =======================================================================
+
+Les tables et les figures sont des éléments flottants définis dans les environnements
+\texttt{table} et \texttt{figure}.
+Ils sont généralement munis d'une légende et d'un indicateur de positionnement passé en
+option qui peut prendre les valeurs combinables suivantes (\texttt{tbp} par défaut):
+
+\begin{table}[H]
+    \begin{tabular}{c|p{10.5cm}}
+        \textbf{Position} & \textbf{Signification} \\
+        \hline
+        \texttt{h} & \emph{here}: placement au mieux , là ou l'élément apparaît dans le
+        texte (éventuellement sur la page suivante s'il occupe un trop grand espace jusqu'à
+        la fin de la page)\\
+        \texttt{H} & \emph{HERE}: placement exactement là où apparaît la définition dans le
+        texte \\
+        \texttt{t} & \emph{top}: en haut d'une page de texte\\
+        \texttt{b} & \emph{bottom}: en bas d'une page de texte\\
+        \texttt{p} & \emph{page of float}: sur une page à part qui ne contient aucun texte\\
+    \end{tabular}
+\end{table}
+Ces éléments sont généralement centrés et munis d'une légende.
+Une déclaration typique d'une table ou d'une figure prendra donc la forme suivante:
+\begin{minipage}{0.47\linewidth}
+    \begin{lstlisting}
+\begin{table}[ht]
+    \centering
+    ... % Définition du tableau en soi
+    \caption{Légende du tableau}
+    \label{tab:myTab}
+\end{table}
+Le tableau~\ref{tab:myTab} montre...
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\linewidth}
+    \begin{lstlisting}
+\begin{figure}[ht]
+    \centering
+    ... % Définition de la figure en soi
+    \caption{Légende de la figure}
+    \label{fig:myFig}
+\end{figure}
+La figure~\ref{fig:myFig} illustre...
+    \end{lstlisting}
+\end{minipage}
+
+Les environnements \verb!\table*! et \verb!figure*! produisent des éléments sur deux
+colonnes si la classe de document de permet.
+
+% -----------------------------------------------------------------
+\subsection{Définition de tableaux dans l'environnement tabular}
+\label{sub:tabular}
+
+L'environnement \texttt{tabular} (ou \texttt{array} pour le mode mathématique :
+voir \S\ref{sec:maths})
+permet de créer des tableaux horizontaux ou verticaux
+et \LaTeX\ détermine automatiquement la taille des
+colonnes\footnote{Plus précisément, un tableau est considéré comme une "boîte"
+  et doit donc être plus petit qu'une page.}. La syntaxe est la suivante:
+\begin{lstlisting}
+    \begin{tabular}[pos]{cols}
+        ligne1 \\
+        ligne2 \\
+        ...
+    \end{tabular}
+\end{lstlisting}
+
+L'option \emph{pos} définit Les options de positionnement pour l'alignement du
+tableau similaires à celles de l'environnement \texttt{table};
+L'argument \emph{cols} configure le format des colonnes.
+Chaque caractère correspond à une colonne ou une séparation de colonne :
+\begin{itemize}
+  \item \texttt{l} : une colonne où les éléments sont alignés à gauche;
+  \item \texttt{r} : une colonne où les éléments sont alignés à droite;
+  \item \texttt{c} : une colonne où les éléments sont centrés;
+  \item \texttt{|} : une ligne verticale entre deux colonnes;
+  \item \verb!@{!\emph{decl}\verb!}! : remplace l'espace inter-colonne par \emph{decl}
+    (en mode texte ou mathématique suivant que l'on est dans un
+    \texttt{tabular} ou un \texttt{array};
+  \item \verb/!{/\emph{decl}\verb!}! : équivalent à \texttt{@} mais ne supprime pas l'espace
+    inter-colonne;
+  \item \verb!p{!\emph{larg}\verb!}! : produit une colonne de largeur \emph{larg}
+    (une longueur).
+    Le texte contenu sera automatiquement remis à la ligne et aligné à gauche -- pour le
+    centrer, il convient d'appliquer la commande \verb!\centering! aux cellules concernées;
+  \item \verb!*{!\emph{num}\verb!}{!\emph{cols}\verb!}! est remplacé par \emph{num} fois le
+    contenu de \emph{cols};
+  \item \verb!>{!\emph{decl}\verb!}!: suivi de l,r,c ou p: insère \emph{decl} à gauche de la colonne;
+  \item \verb!<{!\emph{decl}\verb!}!: après l,r,c ou p: insère \emph{decl} à droite de la colonne;
+\end{itemize}
+Chaque ligne est une séquence d'éléments séparés par \& et il doit y avoir
+le même nombre d'éléments que de colonnes spécifiées par le paramètre \emph{cols}.
+La commande \verb!\hline! trace une ligne horizontale (éventuellement,
+\verb!\cline{!\emph{i}\texttt{-}\emph{j}\verb!}! permet de ne tracer la ligne que de la
+colonne \emph{i} à la colonne \emph{j}).
+Exemple:
+\begin{minipage}{0.6\linewidth}
+    \begin{lstlisting}
+\begin{tabular}{|c||l@{ $\rightarrow$ }r|}
+    \hline
+    \textbf{Col1} & Col2 & Col3\\
+    \hline\hline
+    10 & 11 & 12\\
+    9  & 14 & 27\\
+    \hline
+\end{tabular}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+    \begin{tabular}{|c||l@{ $\rightarrow$ }r|}
+        \hline
+        \textbf{Col1} & Col2 & Col3\\
+        \hline\hline
+        10 & 11 & 12\\
+        9  & 14 & 27\\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+% ..............................
+\subsubsection{Fusion de cellules}
+
+Il est possible de fusionner plusieurs colonnes à l'aide de la commande \\
+\verb!\multicolumn{!\emph{num}\verb!}{!\emph{cols}\verb!}{!\emph{texte}\verb!}!.
+\emph{num} précise alors le nombre de cellules à fusionner, \emph{cols} le format de
+la colonne et \emph{texte} correspond au texte à écrire dans la cellule.
+
+La fusion de plusieurs ligne nécessite le package \texttt{multirow} et la commande du même
+nom \verb!\multirow{!\emph{num}\verb!}{!\emph{l}\verb!}{!\emph{texte}\verb!}!
+qui prend donc trois paramètres: le nombre de lignes à fusionner, la largeur de la cellule
+et enfin le texte à inclure.
+Exemple :
+
+\begin{minipage}{0.58\linewidth}
+    \begin{lstlisting}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \multirow{2}{1.5cm}{\centering Fruit} &
+    \multicolumn{3}{c|}{Vente}\\
+    \cline{2-4}
+          & 2000 & 2005 & 2010 \\\hline
+    Poire & 6.5  & 7.8  & 7.2 \\
+    Pomme & 15   & 16   & 15.5 \\
+    Prune & 7.8  & 9    & 9.2 \\\hline
+\end{tabular}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.41\linewidth}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \multirow{2}{1.5cm}{\centering Fruit} &
+        \multicolumn{3}{c|}{Vente}\\
+        \cline{2-4}
+              & 2000 & 2005 & 2010 \\\hline
+        Poire & 6.5  & 7.8  & 7.2 \\
+        Pomme & 15   & 16   & 15.5 \\
+        Prune & 7.8  & 9    & 9.2 \\\hline
+    \end{tabular}
+\end{minipage}
+
+% \begin{tabular}{|l|c|c|c|}\hline
+%     & \multicolumn{3}{c|}{Vente}\\\cline{2-4}
+%     \multicolumn{1}{|c|}{\raisebox{6pt}[0pt][0pt]{Fruit}}
+%     & 1995 & 1996 & 1997 \\\hline
+%     Poire & 6.5 & 7.8 & 7.2 \\
+%     Pomme & 15 & 16 &15.5 \\
+%     Prune & 7.8 & 9 & 9.2 \\\hline
+% \end{tabular}
+
+% .....................................
+\subsubsection{Ajout d'une barre oblique}
+
+Il est courant de présenter un tableau avec une barre oblique séparant la descrition de la
+première colonne et de la première ligne.
+On utilise pour cela la commande \verb!\backslashbox{!\emph{g}\verb!}{!\emph{d}\verb!}!
+du package \texttt{slashbox}. Exemble:
+
+\begin{minipage}{0.55\linewidth}
+    \begin{lstlisting}
+\begin{tabular}[h]{|l|c|c|c|}
+    \hline
+    \backslashbox{Type}{Année} & 1 & 2\\
+    \hline \hline
+    Poire & 15 & 10 \\
+    Pomme & 10 & 17 \\
+    \hline
+\end{tabular}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+    \begin{tabular}[h]{|l|c|c|c|}
+        \hline
+        \backslashbox{Type}{Année} & 1 & 2\\
+        \hline \hline
+        Poire & 15 & 10 \\
+        Pomme & 10 & 17 \\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+% ..............................................
+\subsubsection{Ajout de cellules colorées }
+
+Il est possible de colorer le fond d'une ligne (respectivement d'une colonne) d'un tableau
+à l'aide des commandes \verb!\rowcolor[!\emph{model}\verb!]{!\emph{value}\verb!}!
+(respectivement  \verb!>\columncolor[!\emph{model}\verb!]{!\emph{value}\verb!}!
+dans la déclaration du tableau (avant un c, r, l ou autre) définies
+dans le package \texttt{colortbl}.
+Comme pour la définition de couleurs (voir \S\ref{sec:color})
+\emph{model} peut prendre les valeurs \texttt{rgb}, \texttt{gray} ou \texttt{cmyk}.
+\emph{value} représente les coordonnées de la couleur souhaitée dans le modèle choisi.
+Exemple:
+
+\begin{minipage}{0.55\linewidth}
+    \begin{lstlisting}
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    \rowcolor[gray]{0.8} Type & 1 & 2 \\
+    \hline \hline
+    Poire & 15 & 10 \\
+    Pomme & 10 & 17 \\
+    \hline
+\end{tabular}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \rowcolor[gray]{0.8} Type & 1 & 2 \\
+        \hline \hline
+        Poire & 15 & 10 \\
+        Pomme & 10 & 17 \\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+\begin{minipage}{0.65\linewidth}
+    \begin{lstlisting}
+\begin{tabular}{|>{\columncolor[gray]{0.8}}l|c|c|c|}
+    \hline
+    Type & 1 & 2 \\
+    \hline \hline
+    Poire & 15 & 10 \\
+    Pomme & 10 & 17 \\
+    \hline
+\end{tabular}
+    \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+    \begin{tabular}{|>{\columncolor[gray]{0.8}}l|c|c|c|}
+        \hline
+        Type & 1 & 2 \\
+        \hline \hline
+        Poire & 15 & 10 \\
+        Pomme & 10 & 17 \\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+% ------------------------------
+\subsection{Insertion d'images}
+
+Une première façon de faire est d'utiliser la commande \verb!\includegraphics! proposée
+par le package \texttt{graphics}
+Quelques options permettent de modifier l'échelle, la largeur, la hauteur de l'image ou
+d'appliquer une rotation:
+\begin{itemize}
+  \item \verb![scale=0.3]!: fixe l'échelle de l'image à 30\%;
+  \item \verb![width=5cm]!:  fixe la largeur de l'image à 5 cm;
+  \item \verb![height=3cm]!: fixe la hauteur à 3 cm
+  \item \verb![angle=45]!: applique une rotation de 45 degrés
+\end{itemize}
+Exemple:
+\begin{lstlisting}
+    \includegraphics[width=7cm,height=50mm]{Images/file.jpg}
+\end{lstlisting}
+
+Une autre façon de faire est spécifique aux images EPS générées par exemple avec l'outil
+de dessin vectoriel \texttt{xfig}\footnote{\url{http://www.xfig.org/}}.
+On utilise alors la commande \verb!\epsfig! proposée par le package du même nom.
+La syntaxe est légèrement différente et impose de ne pas compiler le document
+avec la commande \texttt{pdflatex}. Example:
+
+\begin{lstlisting}
+    \begin{figure}[H]
+        \centerline {\epsfig {file=Images/hash1.eps,width=6cm}}
+        \caption{Fonction de compression d'une fonction de hachage}
+        \label{fig:hash1}
+    \end{figure}
+\end{lstlisting}
+
+À noter qu'on peut utiliser la macro \verb!\textwidth! dans la définition de la largeur
+d'une image au lieu de préciser directement une taille en centimètre.
+Par exemple, l'option \verb![width=0.75\textwidth]! permet de spécifier une largeur
+égale à 75\% de la largeur du texte.
+
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+% 
+% Local Variables:
+% mode: latex
+% End:

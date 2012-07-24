@@ -1,0 +1,334 @@
+%===========================================================================
+% File         : _aspects_avances.tex
+% Title        : 
+% Author       : Sebastien Varrette <Sebastien.Varrette@imag.fr>
+% Creation     : 27 Jun 2007
+% Licence      : CC Creative Commons 
+%                Paternité-Pas d'Utilisation Commerciale-Pas de Modification 2.0 France
+%
+% Vous etes Libres :
+% - de reproduire, distribuer et communiquer cette création au public
+%
+% Selon les conditions suivantes :
+%
+% - Paternité. Vous devez citer le nom de l'auteur original de la manière 
+%     indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous 
+%     confère cette autorisation (mais pas d'une manière qui suggérerait 
+%     qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+% - Pas d'Utilisation Commerciale. Vous n'avez pas le droit d'utiliser 
+%     cette création à des fins commerciales.
+% - Pas de Modification. Vous n'avez pas le droit de modifier, de 
+%     transformer ou d'adapter cette création.
+% - A chaque réutilisation ou distribution de cette création, vous devez 
+%   faire apparaître clairement au public les conditions contractuelles de 
+%   sa mise à disposition. La meilleure manière de les indiquer est un 
+%   lien vers la page web http://creativecommons.org/licenses/by/3.0/deed.fr
+% - Chacune de ces conditions peut être levée si vous obtenez l'autorisation 
+%   du titulaire des droits sur cette oeuvre.
+%   Rien dans ce contrat ne diminue ou ne restreint le droit moral de 
+%   l'auteur ou des auteurs. 
+%============================================================================
+
+%==========================================================
+\subsection{Bibliographies}
+\label{sec:biblio}
+
+Un rapport contient généralement une bibliographie et des citations. 
+La façon la plus rigoureuse de gérer les entrées bibliographiques est d'utiliser l'outil
+de gestion de base bibliographique et de citation BibTeX et nous y reviendrons au 
+\S\ref{sub:bibtex}.
+Sinon, on peut créer les entrées bibliographiques directement dans le corps  du
+document comme indiqué dans le paragraphe suivant.
+
+%........................................................
+\subsubsection{Création dynamique des entrées bibliographiques}
+
+On englobe toutes les entrées dans l'environnement \verb!thebibliography! 
+(placé à la fin du document) qui reçoit en argument le nombre maximum d'entrées contenues.
+
+Ensuite, chaque entrée est introduite par la commande 
+\verb!\bibitem[!\emph{label}\verb!]{!\emph{clef}\verb!}! où 
+\emph{label} définit le label qui apparaîtra dans la bibliographie
+et dans le texte après l'appel de la commande \verb!\cite{clef}!.
+Exemple:
+\begin{lstlisting}
+\begin{thebibliography}{99}
+   \bibitem[label]{cle} Auteur, TITRE, éditeur, année
+   \bibitem[STI96]{stinson96} Douglas Stinson, \\
+     {\it Cryptographie, Théorie et pratique}, Vuibert, 1996
+\end{thebibliography}
+\end{lstlisting}
+
+%.............................................
+\subsubsection{Utilisation de BibTeX}
+\label{sub:bibtex}
+
+Dans ce cas, on définit un ou plusieurs fichiers \texttt{file.bib} qui contiennent
+les entrées bibliographiques. 
+Ces fichiers sont appelés dans le document source par la commande
+\verb!\bibliography{file1, file2,...}!.
+Le contenu d'un \texttt{file.bib} est un ensemble de déclarations par catégorie:
+{\small
+  \begin{quote}
+\begin{verbatim}
+@CATEGORIE{clef,
+  author = {liste-noms-auteur},
+  title  = {titre-article},
+  month  = {mois-parution},
+  year   = {annee-parution},
+  note   = {note},
+  % Champs optionnels propres à chaque catégorie 
+  % booktitle = {},
+  % journal = {}, 
+  % volume = {}, 
+  % number = {}, 
+  % pages = {},
+  % etc.
+}
+\end{verbatim}
+  \end{quote}
+}
+Exemple: 
+\begin{lstlisting}
+% Une thèse
+@PhdThesis{Var_phD07,
+  author = 	 {Sébastien Varrette},
+  title = 	 {{Sécurité des Architectures de Calcul Distribué: 
+                   Authentification et Certification de Résultats}},
+  school = 	 {INP Grenoble et Université du Luxembourg},
+  year = 	 {2007},
+  month = 	 {September},
+}
+% Un livre
+@Book{VB_Prog_C07,
+  author = 	 {S. Varrette and N. Bernard},
+  title = 	 {Programmation avancée en C (avec exercices et corrigés)},
+  publisher = 	 {Hermès},
+  year = 	 {2007},
+  month =        {Février},
+  series = 	 {Collection Informatique et Systèmes d'Informations},
+  isbn =         {978-2-7462-1555-9},
+  url =          {\url{http://C.lafraze.net}},
+  note = 	 {416 pages}
+}
+% Un article de journal
+@Article{LMVV_ES05,
+  author = 	 {Franck Leprevost and Jean Monnerat and Sébastien Varrette 
+                  and Serge Vaudenay},
+  title = 	 {Generating Anomalous Elliptic Curves},
+  journal = 	 {Information Processing Letters},
+  month =        {March},
+  year = 	 {2005},
+  publisher =    {Elsevier Science},
+  volume = 	 {93},
+  number =       {5},
+  pages = 	 {225--230},
+}
+% Un article dans les proceedings d'une conférence
+@InProceedings{RV_Pasco07,
+  author = 	 {Jean-Louis Roch and Sebastien Varrette},
+  title = 	 {{Probabilistic Certification of Divide \& Conquer Algorithms 
+                   on Global Computing Platforms. Application to  Fault-Tolerant 
+                   Exact Matrix-Vector Product.}},
+  booktitle =    {Proceedings of the ACM International Workshop on 
+                  Parallel Symbolic Computation'07 (PASCO'07)},
+  year = 	 {2007},
+  address = 	 {Ontario, Canada},
+  month = 	 {July},
+  publisher =    {ACM}
+}
+% Rapport technique
+@TechReport{Var_SN05,
+  author = 	 {Sébastien Varrette},
+  title = 	 {Introduction aux réseaux de tri tolérants aux fautes},
+  institution =  {Laboratoire ID-IMAG},
+  year = 	 {2005},
+  month = 	 {Août},
+  note = 	 {Draft version},
+}
+\end{lstlisting}
+Il existe bien de nombreuses catégories dont la syntaxe est détaillée par exemple 
+à l'adresse \url{http://en.wikipedia.org/wiki/BibTeX} ou dans les menus des éditeurs 
+tels qu'Emacs.
+Il existe également de nombreux outils pour manipuler graphiquement les fichiers 
+BibTeX comme JabRef\footnote{\url{http://jabref.sourceforge.net/}}, 
+KBibTeX\footnote{\url{http://www.unix-ag.uni-kl.de/~fischer/kbibtex/}} ou encore 
+BibDesk\footnote{\url{http://bibdesk.sourceforge.net/}} sous Mac OS X. 
+D'autres outils sont listés sur \\
+\url{http://www.ecst.csuchico.edu/~jacobsd/bib/tools/}.
+
+%........................................................
+\subsubsection{Styles bibliographiques}
+
+Il existe plusieurs styles de présentation des bibliographies. 
+Ils sont configurés par la commande \verb!\bibliographystyle{!\emph{style}\verb!}!. 
+Les principales valeurs du paramètre style sont:
+\begin{itemize}
+\item \texttt{plain}: les entrées sont triées par ordre alphabétique et apparaissent 
+  numérotées;
+\item \texttt{unsrt}: les entrées ne sont pas triées et apparaissent numérotées dans 
+  l'ordre d'apparition;
+\item \texttt{abbrv}: comme \texttt{plain} mais les prénoms des auteurs, les noms des 
+  journaux et les mois sont abbrégés;
+\item \texttt{alpha}: comme \texttt{plain} mais les clefs ne sont plus de simples numéros.
+  Ils se bases sur les initiales des auteurs et l'année de publication.
+\end{itemize}
+Tous ces styles et bien d'autres encore sont illustrés sur la page 
+\url{http://amath.colorado.edu/documentation/LaTeX/basics/steps/bibstyles.html}.
+
+%......................................................
+\subsubsection{Référencer un objet de la bibliographie}
+
+Dans tous les cas, la référence à un objet de la bibliographie s'effectue avec la commande 
+\verb!\cite{!\emph{clef}\verb!}!.
+En reprenant l'exemple précédent, on pourra référencer l'ouvrage de D.Stinson par:
+\begin{lstlisting}
+Détails de la démonstration dans~\cite{stinson96}, page~14.
+\end{lstlisting}
+Pour faire apparaître toutes les références non citées, on peut utiliser la commande 
+\verb!\nocite*{}!.
+
+%......................................................
+\subsubsection{Compilation avec des références bibliographiques}
+
+Un référencement complet des citations nécessitera une compilation 
+supplémentaire. Ainsi, avec BibTeX, la compilation complète se fera de la façon 
+suivante: 
+{\small
+\begin{verbatim}
+$ latex file.tex
+$ bibtex file
+$ latex file.tex
+$ latex file.tex
+\end{verbatim}
+}
+
+%==========================================================
+\subsection{Utilisation de la couleur}
+\label{sec:color}
+
+L'utilisation de couleurs nécessite le package \texttt{color} qui fournit les commandes:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{c|l}
+    \verb!\textcolor{!\emph{color}\verb!}{...}! & change la \textcolor{green}{couleur} 
+    du texte\\
+    \verb!{\color{!\emph{color}\verb!} ...}! & change la couleur du {\color{red} bloc courant}\\
+    \verb!\colorbox{!\emph{color}\verb!}{...}! & définit une \colorbox{cyan}{boîte de couleur}\\
+    \verb!\fcolorbox{!\emph{bordure}\verb!}{!\emph{color}\verb!}{...}! & définit une \fcolorbox{cyan}{yellow}{boîte de couleur encadrée}\\
+    \verb!\pagecolor{!\emph{color}\verb!}! & change la couleur de fond de la page\\
+  \end{tabular}
+\end{table}
+
+Il est possible de définir ses propres couleurs à l'aide de la commande\\  
+\verb!\definecolor{!\emph{nom}\verb!}{!\emph{model}\verb!}{!\emph{value}\verb!}!. 
+\emph{model} peut prendre les valeurs \texttt{rgb}, \texttt{gray} ou \texttt{cmyk}.
+\emph{value} représente les coordonnées de la couleur souhaitée dans le modèle choisi. 
+Exemple: 
+
+\begin{minipage}{0.5\linewidth}
+  \begin{lstlisting}
+\definecolor{lightred}{rgb}{1,0.5,0.5}
+\definecolor{lightgray}{gray}{0.8}   
+\textcolor{lightred}{Lightred}
+\textcolor{lightgray}{Lightgray}
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\linewidth}
+  \definecolor{lightred}{rgb}{1,0.5,0.5}
+  \definecolor{lightgray}{gray}{0.8}   
+  \textcolor{lightred}{Lightred}
+  \textcolor{lightgray}{Lightgray}
+\end{minipage}
+
+Certaines couleurs sont définies par défaut:
+\texttt{black}, \texttt{white}, 
+\printcolor{red}, \printcolor{green}, \printcolor{blue}, \printcolor{yellow}, 
+\printcolor{cyan} et \printcolor{magenta}.
+
+%-----------------------------------------------------------------
+\subsection{Changer le style des pages d'un rapport ou d'un livre}
+
+Dans le cas d'un document de type \texttt{report} ou \texttt{book}, il est possible 
+de changer le style les pages de façon à ce que l'en-tête supérieur des 
+pages paires mentionne le titre du chapitre courant tandis que l'en-tête supérieur 
+des pages impaires référence le titre de la section courante. 
+
+Dans ce tutorial, le code suivant a été utilisé pour configurer l'en-tête de chaque page:
+\begin{lstlisting}
+\usepackage{fancyhdr}
+
+% --- style de page (pour les en-tete) ---
+\pagestyle{fancy}
+%\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt}
+\fancypagestyle{plain}{
+ \fancyhead{}
+ \renewcommand{\headrulewidth}{0pt}
+}
+\end{lstlisting}
+
+
+%-----------------------------------------------------------------
+\subsection{Redefinition de commandes }
+
+\begin{itemize}
+\item \verb!\newcommand{!\emph{nom}\verb!}[!\emph{nb\_param}\verb!][!\emph{defaut}\verb!]{!definition\verb!}! : définit une nouvelle commande. Les noms de commandes
+doivent commencer par "$\backslash$". \texttt{nb\_param} est le nombre de paramètres attendus.
+Si \texttt{defaut} est précisé, le premier paramètre (\#1) est optionnel et a pour valeur 
+\texttt{defaut}. Exemple: 
+\begin{lstlisting}
+  \newcommand{\iu}[1]{{\underline{\it #1}}}
+\end{lstlisting}
+L'appel \verb!\iu{Test}! par la suite produira \iu{Test}.
+
+\item \verb!\renewcommand! : redéfinit ou définit une commande ;
+
+\item \verb!\newenvironment{!\emph{nom}\verb!}[!\emph{nb\_param}\verb!][!\emph{defaut}\verb!]{!definition\verb!}{!\emph{debut}\verb!}{!\emph{fin}\verb!}! : définit un nouvel 
+environnement. Les blocs debut et fin remplaceront \verb!\begin{nom}! et \verb!\end{nom}!.
+Exemple: 
+\begin{lstlisting}
+\newenvironment{test}
+  {\begin{center}\small}
+  {\end{center}\vspace{-1em}}
+\end{lstlisting}
+
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Presenter un code source avec coloration syntaxique}
+
+Le package \texttt{listings}\footnote{\url{http://www.pvv.ntnu.no/~berland/latex/docs/listings.pdf}} permet de présenter un code source avec une coloration syntaxique 
+spécifique au langage considéré.
+Les exemples de code Latex de ce tutorial sont ainsi présentés de cette façon avec 
+la configuration suivante: 
+\begin{lstlisting}
+\usepackage[usenames]{color}
+\definecolor{bcode}{rgb}{0.9,0.9,0.9} % Couleur de fond pour les listings
+\usepackage{listings}
+
+%%% Configuration par défaut des listings
+\lstset{numbers=left,numberstyle=\tiny,stepnumber=3,firstnumber=1,
+  language=[LaTeX]TeX,basicstyle=\small,columns=flexible,
+  emph={includegraphics,rowcolor,columncolor,multirow,subsection},
+  emphstyle=\bfseries,backgroundcolor=\color{bcode},
+  showstringspaces=false,numbers=none}
+\end{lstlisting}
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% eof
+%
+% Local Variables:
+% mode: latex
+% End:
