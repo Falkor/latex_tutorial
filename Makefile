@@ -105,9 +105,22 @@ BACKUP_FILES = $(shell find . -name "*~")
 # Never add *.tex (or any reference to source files) for this variable.
 TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.out
 
+# Git stuff management
+VERSION  = $(shell head VERSION)
+TAG_PREFIX = "latex-tutorial-v"
+MAJOR    = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
+MINOR    = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
+REVISION = $(shell git rev-list $(TAG_PREFIX)$(MAJOR).$(MINOR) --count)
+
+
 ############################### Now starting rules ################################
 # Required rule : what's to be done each time 
 all: $(TARGET_PDF)
+
+# Git flow management 
+bump:
+	@echo "Bump the current version of the repository (version $(VERSION) $(MAJOR).$(MINOR) to $(REVISION)"
+
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
