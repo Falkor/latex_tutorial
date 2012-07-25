@@ -146,16 +146,28 @@ start_bump_patch:
 	git flow release start $(NEXT_PATCH_VERSION)
 	@echo $(NEXT_PATCH_VERSION) > VERSION
 	git commit -s -m "Patch bump to version $(NEXT_PATCH_VERSION)" VERSION
+	@echo "Run 'make release' once you finished the bump"
 
-# git pull origin
-# git flow feature start "bump_to_$(MAJOR).$(MINOR).$(REVISION)"
-# @echo "$(MAJOR).$(MINOR).$(REVISION)" > VERSION
-# git commit -s -m "Patch bump to version $(MAJOR).$(MINOR).$(REVISION)" VERSION
-# @echo "Run 'make release' once you finished the patching"
+start_bump_minor:
+	@echo "Start the minor release of the repository from $(VERSION) to $(NEXT_MINOR_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_MINOR_VERSION)
+	@echo $(NEXT_MINOR_VERSION) > VERSION
+	git commit -s -m "Minor bump to version $(NEXT_MINOR_VERSION)" VERSION
+	@echo "Run 'make release' once you finished the bump"
+
+start_bump_major:
+	@echo "Start the major release of the repository from $(VERSION) to $(NEXT_MAJOR_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_MAJOR_VERSION)
+	@echo $(NEXT_MAJOR_VERSION) > VERSION
+	git commit -s -m "Major bump to version $(NEXT_MAJOR_VERSION)" VERSION
+	@echo "Run 'make release' once you finished the bump"
+
 
 release: $(TARGET_PDF)
 	@cp $(TARGET_PDF) $(TARGET_PDF:%.pdf=%-v$(VERSION).pdf)
-	git flow release finish $(VERSION)
+	git flow release finish -s $(VERSION)
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
