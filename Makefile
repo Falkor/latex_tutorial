@@ -109,30 +109,51 @@ TO_MOVE      = *.aux *.log *.toc *.lof *.lot *.bbl *.blg *.out
 LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
 LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
 TAG_PREFIX = "latex-tutorial-v"
-# VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
 
+BUILD_VERSION = $(shell git log --oneline | wc -l | xargs echo)  # total number of commits 
 VERSION  = $(shell head VERSION)
-MAJOR    = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
-MINOR    = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
-REVISION = $(shell git rev-list $(LAST_TAG).. --count)
-ROOTDIR  = $(shell git rev-parse --show-toplevel)
+#VERSION = '0.6.6-b18'
+# OR try to guess directly from the last git tag
+# VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
+MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
+MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
+PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
+#REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
+#ROOTDIR    = $(shell git rev-parse --show-toplevel)
+NEXT_MAJOR_VERSION = "$(shell expr $(MAJOR) + 1).0.0-b$(BUILD_VERSION)"
+NEXT_MINOR_VERSION = "$(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD_VERSION)"
+NEXT_PATCH_VERSION = "$(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD_VERSION)"
+
 
 ############################### Now starting rules ################################
 # Required rule : what's to be done each time 
 all: $(TARGET_PDF)
 
-# Git flow management 
-bump_patch:
-	@echo "Bump the current version of the repository from $(VERSION) to $(MAJOR).$(MINOR).$(REVISION)"
-	git pull origin
-	git flow feature start "bump_to_$(MAJOR).$(MINOR).$(REVISION)"
-	@echo "$(MAJOR).$(MINOR).$(REVISION)" > VERSION
-	git commit -s -m "Patch bump to version $(MAJOR).$(MINOR).$(REVISION)" VERSION
-	@echo "Run 'make release' once you finished the patching"
+versioninfo:
+	@echo "Current version: $(VERSION) (major: $(MAJOR), minor: $(MINOR), patch: $(PATCH) )"
+	@echo "Last tag: $(LAST_TAG)"
+	@echo "Revision: $(REVISION) (number of commits since last tag)"
+	@echo "Build: $(BUILD_VERSION) (total number of commits)"
+	@echo "next major version: $(NEXT_MAJOR_VERSION)"
+	@echo "next minor version: $(NEXT_MINOR_VERSION)"
+	@echo "next patch version: $(NEXT_PATCH_VERSION)"
 
-release: 
-	git flow feature finish "bump_to_$(VERSION)"
-	git tag -s "$(TAG_PREFIX)$(VERSION)"
+# Git flow management 
+start_bump_patch:
+	@echo "Start the patch release of the repository from $(VERSION) to $(NEXT_PATCH_VERSION)"
+	git pull origin
+	git flow release start $(NEXT_PATCH_VERSION)
+	@echo $(NEXT_PATCH_VERSION) > VERSION
+	git commit -s -m "Patch bump to version $(NEXT_PATCH_VERSION)" VERSION
+
+# git pull origin
+# git flow feature start "bump_to_$(MAJOR).$(MINOR).$(REVISION)"
+# @echo "$(MAJOR).$(MINOR).$(REVISION)" > VERSION
+# git commit -s -m "Patch bump to version $(MAJOR).$(MINOR).$(REVISION)" VERSION
+# @echo "Run 'make release' once you finished the patching"
+
+# release: 
+# 	git flow feature finish "bump_to_$(VERSION)"
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
