@@ -142,10 +142,10 @@ setup:
 
 
 versioninfo:
-	@echo "Current version: $(VERSION) (major: $(MAJOR), minor: $(MINOR), patch: $(PATCH) )"
+	@echo "Current version: $(VERSION)"
 	@echo "Last tag: $(LAST_TAG)"
-	@echo "Revision: $(REVISION) (number of commits since last tag)"
-	@echo "Build: _$(BUILD)_ (total number of commits)"
+	@echo "$(shell git rev-list $(LAST_TAG).. --count) commit(s) since last tag"
+	@echo "Build: $(BUILD) (total number of commits)"
 	@echo "next major version: $(NEXT_MAJOR_VERSION)"
 	@echo "next minor version: $(NEXT_MINOR_VERSION)"
 	@echo "next patch version: $(NEXT_PATCH_VERSION)"

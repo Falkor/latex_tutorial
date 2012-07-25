@@ -3,7 +3,7 @@
 
 Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [[www](http://varrette.gforge.uni.lu)]
 
-        Time-stamp: <Thu 2012-07-26 00:57 svarrette>
+        Time-stamp: <Thu 2012-07-26 01:08 svarrette>
 
 -------------------
 
@@ -65,7 +65,11 @@ Example: `1.0.0-b28`
 
 The current version number is stored in the file `VERSION`. __/!\ NEVER MAKE ANY MANUAL CHANGE TO THIS FILE__
 
-If a new version number such be bumped, you simply have to run:
+For more information on the version, run:
+
+     $> make versioninfo
+
+If a new  version number such be bumped, you simply have to run:
 
       $> make start_bump_{major,minor,patch}
 
