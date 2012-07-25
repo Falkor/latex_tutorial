@@ -110,22 +110,20 @@ LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
 LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
 TAG_PREFIX = "latex-tutorial-v"
 
-BUILD_VERSION = $(shell git log --oneline | wc -l | xargs echo)  # total number of commits 
 #VERSION  = $(shell head VERSION)
 # OR try to guess directly from the last git tag
 VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
 MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
 MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
-# ifeq($(PATCH),)
-# PATCH = 0
-# endif
+# total number of commits 		
+BUILD      = $(shell git log --oneline | wc -l | sed -e "s/[ \t]*//g")
 
 #REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
 #ROOTDIR    = $(shell git rev-parse --show-toplevel)
-NEXT_MAJOR_VERSION = "$(shell expr $(MAJOR) + 1).0.0-b$(BUILD_VERSION)"
-NEXT_MINOR_VERSION = "$(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD_VERSION)"
-NEXT_PATCH_VERSION = "$(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD_VERSION)"
+NEXT_MAJOR_VERSION = "$(shell expr $(MAJOR) + 1).0.0-b$(BUILD)"
+NEXT_MINOR_VERSION = "$(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD)"
+NEXT_PATCH_VERSION = "$(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)"
 
 
 ############################### Now starting rules ################################
@@ -136,12 +134,12 @@ versioninfo:
 	@echo "Current version: $(VERSION) (major: $(MAJOR), minor: $(MINOR), patch: $(PATCH) )"
 	@echo "Last tag: $(LAST_TAG)"
 	@echo "Revision: $(REVISION) (number of commits since last tag)"
-	@echo "Build: $(BUILD_VERSION) (total number of commits)"
+	@echo "Build: _$(BUILD)_ (total number of commits)"
 	@echo "next major version: $(NEXT_MAJOR_VERSION)"
 	@echo "next minor version: $(NEXT_MINOR_VERSION)"
 	@echo "next patch version: $(NEXT_PATCH_VERSION)"
 
-# Git flow management 
+# Git flow management - this should be factorized 
 start_bump_patch:
 	@echo "Start the patch release of the repository from $(VERSION) to $(NEXT_PATCH_VERSION)"
 	git pull origin
