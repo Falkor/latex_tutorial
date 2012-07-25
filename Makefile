@@ -146,7 +146,8 @@ start_bump_patch:
 	git flow release start $(NEXT_PATCH_VERSION)
 	@echo $(NEXT_PATCH_VERSION) > VERSION
 	git commit -s -m "Patch bump to version $(NEXT_PATCH_VERSION)" VERSION
-	@echo "Run 'make release' once you finished the bump"
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
 
 start_bump_minor:
 	@echo "Start the minor release of the repository from $(VERSION) to $(NEXT_MINOR_VERSION)"
@@ -154,7 +155,8 @@ start_bump_minor:
 	git flow release start $(NEXT_MINOR_VERSION)
 	@echo $(NEXT_MINOR_VERSION) > VERSION
 	git commit -s -m "Minor bump to version $(NEXT_MINOR_VERSION)" VERSION
-	@echo "Run 'make release' once you finished the bump"
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
 
 start_bump_major:
 	@echo "Start the major release of the repository from $(VERSION) to $(NEXT_MAJOR_VERSION)"
@@ -162,7 +164,8 @@ start_bump_major:
 	git flow release start $(NEXT_MAJOR_VERSION)
 	@echo $(NEXT_MAJOR_VERSION) > VERSION
 	git commit -s -m "Major bump to version $(NEXT_MAJOR_VERSION)" VERSION
-	@echo "Run 'make release' once you finished the bump"
+	@echo "=> remember to update the version number in $(MAIN_TEX)"
+	@echo "=> run 'make release' once you finished the bump"
 
 
 release: $(TARGET_PDF)
