@@ -111,13 +111,16 @@ LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
 TAG_PREFIX = "latex-tutorial-v"
 
 BUILD_VERSION = $(shell git log --oneline | wc -l | xargs echo)  # total number of commits 
-VERSION  = $(shell head VERSION)
-#VERSION = '0.6.6-b18'
+#VERSION  = $(shell head VERSION)
 # OR try to guess directly from the last git tag
-# VERSION  = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^latex-tutorial-v//")
+VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
 MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
 MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
+# ifeq($(PATCH),)
+# PATCH = 0
+# endif
+
 #REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
 #ROOTDIR    = $(shell git rev-parse --show-toplevel)
 NEXT_MAJOR_VERSION = "$(shell expr $(MAJOR) + 1).0.0-b$(BUILD_VERSION)"
