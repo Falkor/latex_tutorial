@@ -130,6 +130,17 @@ NEXT_PATCH_VERSION = $(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)
 # Required rule : what's to be done each time 
 all: $(TARGET_PDF)
 
+setup:
+	grb grab production
+	git config gitflow.branch.master     production
+	git config gitflow.branch.develop    master
+	git config gitflow.prefix.feature    feature/
+	git config gitflow.prefix.release    release/
+	git config gitflow.prefix.hotfix     hotfix/
+	git config gitflow.prefix.support    support/
+	git config gitflow.prefix.versiontag $(TAG_PREFIX)
+
+
 versioninfo:
 	@echo "Current version: $(VERSION) (major: $(MAJOR), minor: $(MINOR), patch: $(PATCH) )"
 	@echo "Last tag: $(LAST_TAG)"
@@ -171,6 +182,7 @@ start_bump_major:
 release: $(TARGET_PDF)
 	@cp $(TARGET_PDF) $(TARGET_PDF:%.pdf=%-v$(VERSION).pdf)
 	git flow release finish -s $(VERSION)
+	git push origin --tags
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
