@@ -110,9 +110,9 @@ LAST_TAG_COMMIT = $(shell git rev-list --tags --max-count=1)
 LAST_TAG = $(shell git describe --tags $(LAST_TAG_COMMIT) )
 TAG_PREFIX = "latex-tutorial-v"
 
-#VERSION  = $(shell head VERSION)
+VERSION  = $(shell head VERSION)
 # OR try to guess directly from the last git tag
-VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
+#VERSION    = $(shell  git describe --tags $(LAST_TAG_COMMIT) | sed "s/^$(TAG_PREFIX)//")
 MAJOR      = $(shell echo $(VERSION) | sed "s/^\([0-9]*\).*/\1/")
 MINOR      = $(shell echo $(VERSION) | sed "s/[0-9]*\.\([0-9]*\).*/\1/")
 PATCH      = $(shell echo $(VERSION) | sed "s/[0-9]*\.[0-9]*\.\([0-9]*\).*/\1/")
@@ -121,9 +121,9 @@ BUILD      = $(shell git log --oneline | wc -l | sed -e "s/[ \t]*//g")
 
 #REVISION   = $(shell git rev-list $(LAST_TAG).. --count)
 #ROOTDIR    = $(shell git rev-parse --show-toplevel)
-NEXT_MAJOR_VERSION = "$(shell expr $(MAJOR) + 1).0.0-b$(BUILD)"
-NEXT_MINOR_VERSION = "$(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD)"
-NEXT_PATCH_VERSION = "$(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)"
+NEXT_MAJOR_VERSION = $(shell expr $(MAJOR) + 1).0.0-b$(BUILD)
+NEXT_MINOR_VERSION = $(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD)
+NEXT_PATCH_VERSION = $(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)
 
 
 ############################### Now starting rules ################################
@@ -153,8 +153,9 @@ start_bump_patch:
 # git commit -s -m "Patch bump to version $(MAJOR).$(MINOR).$(REVISION)" VERSION
 # @echo "Run 'make release' once you finished the patching"
 
-# release: 
-# 	git flow feature finish "bump_to_$(VERSION)"
+release: $(TARGET_PDF)
+	@cp $(TARGET_PDF) $(TARGET_PDF:%.pdf=%-v$(VERSION).pdf)
+	git flow release finish $(VERSION)
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
