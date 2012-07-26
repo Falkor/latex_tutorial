@@ -3,7 +3,7 @@
 
 Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [[www](http://varrette.gforge.uni.lu)]
 
-        Time-stamp: <Thu 2012-07-26 01:08 svarrette>
+        Time-stamp: <Thu 2012-07-26 11:47 svarrette>
 
 -------------------
 
@@ -11,8 +11,8 @@ Copyright (c) 2012 [Sebastien Varrette](mailto:<Sebastien.Varrette@uni.lu>) [[ww
 
 Tutorial to the use of the LaTeX document markup language, yet __in French__. 
 
-This repository holds the LaTeX sources of the tutorial as the best way to learn LaTeX is probably to check how people are writting documents in LaTeX. 
-You can view the different versions of the PDF generated from these sources [here](https://github.com/Falkor/latex_tutorial/downloads)
+This repository holds the LaTeX sources of the tutorial as the best way to learn LaTeX is probably to check how people are writing documents in LaTeX. 
+You can view the last version of the PDF generated from these sources [here](https://github.com/Falkor/latex_tutorial/downloads)
 
 # Installation
 
@@ -48,9 +48,9 @@ Note that it assumes you have installed `grb`
 
 ## Releasing mechanism
 
-The operation consisting of releasing a new version of this repository is automated by a set of task within the `Makefile`. 
+The operation consisting of releasing a new version of this repository is automated by a set of tasks within the `Makefile`. 
 
-The version number have the following format: 
+In this context, a version number have the following format: 
 
       <major>.<minor>.<patch>-b<build>
       
@@ -59,11 +59,11 @@ where:
 * `<major>` corresponds to the major version number
 * `<minor>` corresponds to the minor version number
 * `<patch>` corresponds to the patching version number
-* `<build>` states the build number _i.e._ the total number of commits within the `master`branch. 
+* `<build>` states the build number _i.e._ the total number of commits within the `master` branch. 
       
 Example: `1.0.0-b28`
 
-The current version number is stored in the file `VERSION`. __/!\ NEVER MAKE ANY MANUAL CHANGE TO THIS FILE__
+The current version number is stored in the file `VERSION`. __/!\ NEVER MAKE ANY MANUAL CHANGES TO THIS FILE__
 
 For more information on the version, run:
 
