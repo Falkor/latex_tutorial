@@ -46,10 +46,15 @@
 # make       : Compile LaTeX files, generated files (pdf etc.) are placed in $(OUTPUT_DIR)/ 
 # make force : Force re-compilation, even if not needed 
 # make clean : Remove all generated files 
-# make rtf :   Generate an RTF file using latex2rtf
+# make rtf   : Generate an RTF file using latex2rtf  (useful for further
+#              copy/paste in a Word document)  
 # make html  : generate HTML files from tex in $(HTML_DIR)/ (using latex2html)
-#                  The directory is created on the first invocation
-# make help      : print help message 
+#              The directory is created on the first invocation
+# make help  : Print help message
+# make setup : Initiate git-flow configuration for your local copy of the repository
+# make start_bump_{major,minor,patch}: start a new version release with git-flow at a given 
+#              level (major, minor or patch bump) 
+# make release: Finalize the release using git-flow                    
 #
 ############################## Variables Declarations ##############################
 SHELL = /bin/bash
@@ -87,6 +92,8 @@ DVIPS        = $(shell which dvips)
 DVIPDF       = $(shell which dvipdf)
 GZIP         = $(shell which gzip)
 LATEX2RTF    = $(shell which latex2rtf)
+GRB          = $(shell which grb)
+GITFLOW      = $(shell which git-flow)
 # Generated files
 DVI    	     = $(MAIN_TEX:%.tex=%.dvi)
 PS           = $(MAIN_TEX:%.tex=%.ps)
@@ -125,21 +132,43 @@ NEXT_MAJOR_VERSION = $(shell expr $(MAJOR) + 1).0.0-b$(BUILD)
 NEXT_MINOR_VERSION = $(MAJOR).$(shell expr $(MINOR) + 1).0-b$(BUILD)
 NEXT_PATCH_VERSION = $(MAJOR).$(MINOR).$(shell expr $(PATCH) + 1)-b$(BUILD)
 
+.PHONY: all clean create_output_dir dvi force help html move_to_trash pdflatex ps release rtf setup start_bump_major start_bump_minor start_bump_patch test versioninfo 
 
 ############################### Now starting rules ################################
 # Required rule : what's to be done each time 
 all: $(TARGET_PDF)
 
+ifeq ($(GRB),)
+setup: 
+	@echo "Unable to find the 'grb' binary. Install it to setup your git repository."
+	@echo "See https://github.com/webmat/git_remote_branch/ for more details"
+else 
+setup:
+	grb grab production
+	git config gitflow.branch.master     production
+	git config gitflow.branch.develop    master
+	git config gitflow.prefix.feature    feature/
+	git config gitflow.prefix.release    release/
+	git config gitflow.prefix.hotfix     hotfix/
+	git config gitflow.prefix.support    support/
+	git config gitflow.prefix.versiontag $(TAG_PREFIX)
+endif
+
 versioninfo:
-	@echo "Current version: $(VERSION) (major: $(MAJOR), minor: $(MINOR), patch: $(PATCH) )"
+	@echo "Current version: $(VERSION)"
 	@echo "Last tag: $(LAST_TAG)"
-	@echo "Revision: $(REVISION) (number of commits since last tag)"
-	@echo "Build: _$(BUILD)_ (total number of commits)"
+	@echo "$(shell git rev-list $(LAST_TAG).. --count) commit(s) since last tag"
+	@echo "Build: $(BUILD) (total number of commits)"
 	@echo "next major version: $(NEXT_MAJOR_VERSION)"
 	@echo "next minor version: $(NEXT_MINOR_VERSION)"
 	@echo "next patch version: $(NEXT_PATCH_VERSION)"
 
 # Git flow management - this should be factorized 
+ifeq ($(GITFLOW),)
+start_bump_patch start_bump_minor start_bump_major release: 
+	@echo "Unable to find git-flow on your system. "
+	@echo "See https://github.com/nvie/gitflow for installation details"
+else
 start_bump_patch:
 	@echo "Start the patch release of the repository from $(VERSION) to $(NEXT_PATCH_VERSION)"
 	git pull origin
@@ -171,6 +200,8 @@ start_bump_major:
 release: $(TARGET_PDF)
 	@cp $(TARGET_PDF) $(TARGET_PDF:%.pdf=%-v$(VERSION).pdf)
 	git flow release finish -s $(VERSION)
+	git push origin --tags
+endif
 
 # Dvi files generation
 dvi $(DVI) : $(TEX_SRC) $(FIGURES)
@@ -331,16 +362,22 @@ test:
 
 # print help message
 help :
-	@echo '+---------------------------------------------------------------+'
-	@echo '|                        Available Commands                     |'
-	@echo '+------------+--------------------------------------------------+'
-	@echo '| make       | Compile LaTeX files.                             |'
-	@echo '|            | Generated files (pdf etc.) are placed in $(OUTPUT_DIR)/ '
-	@echo '| make force | Force re-compilation, even if not needed         |'
-	@echo '| make clean | Remove all generated files                       |'
-	@echo '| make html  | Generate HTML files from TeX in $(HTML_DIR)/     '
-	@echo '| make help  | Print help message                               |'
-	@echo '+------------+--------------------------------------------------+'
+	@echo '+----------------------------------------------------------------------+'
+	@echo '|                        Available Commands                            |'
+	@echo '+----------------------------------------------------------------------+'
+	@echo '| make:         Compile LaTeX files.                                   |'
+	@echo '|               Generated files (pdf etc.) are placed in $(OUTPUT_DIR)/ '
+	@echo '| make force:   Force re-compilation, even if not needed               |'
+	@echo '| make clean:   Remove all generated files                             |'
+	@echo '| make html:    Generate HTML files from TeX in $(HTML_DIR)/           '
+	@echo '| make help:    Print help message                                     |'
+	@echo '| make setup:   Initiate git-flow for your local copy of the repository|'
+	@echo '| make start_bump_{major,minor,patch}: start a new version release with|'
+	@echo '|               git-flow at a given level (major, minor or patch bump) |'
+	@echo '| make release: Finalize the release using git-flow                    |'
+	@echo '| make rtf:     Generate an RTF file from LaTeX sources (useful for    |'
+	@echo '|               further copy/paste in a Word document)                 |'
+	@echo '+----------------------------------------------------------------------+'
 
 # RTF generation using latex2rtf
 rtf $(RTF): $(TARGET_PDF)
@@ -378,3 +415,4 @@ else
 endif
 endif
 endif
+
