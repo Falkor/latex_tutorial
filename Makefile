@@ -200,6 +200,7 @@ start_bump_major:
 release: $(TARGET_PDF)
 	@cp $(TARGET_PDF) $(TARGET_PDF:%.pdf=%-v$(VERSION).pdf)
 	git flow release finish -s $(VERSION)
+	git push origin
 	git push origin --tags
 endif
 
